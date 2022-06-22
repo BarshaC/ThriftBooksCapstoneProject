@@ -10,6 +10,9 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
+
 @ParseClassName("Post")
 public class Post extends ParseObject {
     public static final String KEY_USER = "user";
@@ -36,7 +39,7 @@ public class Post extends ParseObject {
     }
 
     public ParseUser getUser() {
-        return (User) getParseUser(KEY_USER);
+        return getParseUser(KEY_USER);
     }
 
     public void setUser(ParseUser user){

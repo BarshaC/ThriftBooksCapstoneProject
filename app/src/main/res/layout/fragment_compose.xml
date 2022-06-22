@@ -53,11 +53,11 @@
         android:layout_marginTop="48dp"
         android:text="Add Photo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPostImage"
+        app:layout_constraintTop_toBottomOf="@+id/ivClickedBook"
         app:rippleColor="#9C27B0" />
 
     <ImageView
-        android:id="@+id/ivPostImage"
+        android:id="@+id/ivClickedBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

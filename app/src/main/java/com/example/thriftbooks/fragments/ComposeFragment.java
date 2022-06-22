@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import com.example.thriftbooks.R;
 import com.example.thriftbooks.models.Post;
-import com.example.thriftbooks.models.User;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -40,7 +39,7 @@ public class ComposeFragment extends Fragment {
     public String photoFileName = "photo.jpg";
     private EditText etDescription;
     private Button btnCaptureImage;
-    private ImageView ivPostImage;
+    private ImageView ivImageBook;
     private Button btnSubmit;
     private File photoFile;
 
@@ -60,7 +59,7 @@ public class ComposeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         etDescription = view.findViewById(R.id.etDescription);
-        ivPostImage = view.findViewById(R.id.ivPostImage);
+        ivImageBook = view.findViewById(R.id.ivClickedBook);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +70,7 @@ public class ComposeFragment extends Fragment {
                     Toast.makeText(getContext(), "You must add description", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (photoFile == null || ivPostImage.getDrawable() == null) {
+                if (photoFile == null || ivImageBook.getDrawable() == null) {
                     Toast.makeText(getContext(), "You must add image!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -94,7 +93,7 @@ public class ComposeFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                ivPostImage.setImageBitmap(takenImage);
+                ivImageBook.setImageBitmap(takenImage);
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
@@ -105,7 +104,7 @@ public class ComposeFragment extends Fragment {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         photoFile = getPhotoFileUri(photoFileName);
         Log.d(TAG, "failed to create directory");
-        Uri fileProvider = FileProvider.getUriForFile(getPhotoFileUri("photo.jpg"), "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
@@ -130,7 +129,7 @@ public class ComposeFragment extends Fragment {
         Post post = new Post();
         post.setDescription(description);
         post.setImage(new ParseFile(photoFile));
-        post.setUser((User) currentUser);
+        post.setUser(currentUser);
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -140,7 +139,7 @@ public class ComposeFragment extends Fragment {
                 }
                 Log.i(TAG, "Saved the post!");
                 etDescription.setText("");
-                ivPostImage.setImageResource(0);
+                ivImageBook.setImageResource(0);
             }
         });
     }
