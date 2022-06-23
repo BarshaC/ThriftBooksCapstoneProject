@@ -5,15 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.FeedActivity">
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
-        android:layout_width="406dp"
-        android:layout_height="661dp"
+        android:id="@+id/swipeContainer1"
+        android:layout_width="407dp"
+        android:layout_height="656dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="5dp">
+        tools:layout_editor_absoluteY="-2dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvBooks"
+            android:id="@+id/rvBooks1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"

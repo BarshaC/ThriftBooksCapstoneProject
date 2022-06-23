@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,12 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thriftbooks.activities.BookDetailsActivity;
-import com.example.thriftbooks.activities.FeedActivity;
+//import com.example.thriftbooks.activities.FeedActivity;
 import com.example.thriftbooks.models.Post;
 import com.parse.Parse;
 import com.parse.ParseFile;
 
 import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -56,6 +58,9 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
         private ImageView ivImage;
         private TextView tvDescription;
         private ImageView displayPicture;
+        private TextView tvBookAuthor;
+        private TextView tvBookTitle;
+        private TextView tvBookType;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,10 +68,16 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
             ivImage = itemView.findViewById(R.id.ivClickedBook);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             displayPicture = itemView.findViewById(R.id.profilePicture);
+            tvBookTitle = itemView.findViewById(R.id.tvTitle);
+            tvBookAuthor = itemView.findViewById(R.id.tvBookType);
+            tvBookType = itemView.findViewById(R.id.tvBookType);
         }
         public void bind(Post post)  {
-            tvDescription.setText(post.getDescription());
+            tvDescription.setText("Description: " + post.getDescription());
             tvUsername.setText(post.getUser().getUsername());
+            tvBookTitle.setText("Title: " + post.getBookTitle());
+            tvBookAuthor.setText(post.getBookAuthor());
+            tvBookType.setText(post.getBookType());
             ParseFile profileImage = post.getUser().getProfileImage();
             if (profileImage != null) {
                 Glide.with(context).load(profileImage.getUrl()).into(displayPicture);

@@ -36,7 +36,7 @@ public class FeedActivity extends AppCompatActivity {
                 queryPosts();
             }
         });
-        rvBooks = findViewById(R.id.rvBooks);
+        rvBooks = findViewById(R.id.rvBooks1);
         allPosts = new ArrayList<>();
         adapter = new BooksAdapter(this, allPosts);
         rvBooks.setAdapter(adapter);

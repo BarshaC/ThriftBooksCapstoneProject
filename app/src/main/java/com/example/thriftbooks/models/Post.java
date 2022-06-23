@@ -14,7 +14,7 @@ public class Post extends ParseObject {
     public static final String KEY_BOOK_TITLE = "titleBook";
     public static final String KEY_BOOK_AUTHOR = "authorBook";
     public static final String KEY_BOOK_DESCRIPTION = "description";
-    public static final String KEY_BOOK_PRICE = "price";
+    public static final String KEY_BOOK_TYPE = "bookType";
     public Post() {}
     public String getDescription() {
         return getString(KEY_BOOK_DESCRIPTION);
@@ -32,11 +32,16 @@ public class Post extends ParseObject {
     }
 
     public String getBookTitle() { return getString(KEY_BOOK_TITLE); }
+
     public void setBookTitle(String titleBook) { put(KEY_BOOK_TITLE,titleBook); }
 
     public String getBookAuthor() { return getString(KEY_BOOK_AUTHOR);}
 
     public void setBookAuthor(String authorBook ) { put(KEY_BOOK_AUTHOR, authorBook);}
+
+    public String getBookType() { return getString(KEY_BOOK_TYPE); }
+
+    public void setBookType(String bookType) { put(KEY_BOOK_TYPE,bookType); }
 
     public User getUser() {
         return (User) getParseUser(KEY_USER);
