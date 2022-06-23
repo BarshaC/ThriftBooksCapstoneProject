@@ -15,22 +15,20 @@ import com.bumptech.glide.Glide;
 import com.example.thriftbooks.activities.BookDetailsActivity;
 import com.example.thriftbooks.activities.FeedActivity;
 import com.example.thriftbooks.models.Post;
+import com.parse.Parse;
 import com.parse.ParseFile;
 
 import org.parceler.Parcels;
 
 import java.util.List;
 
-public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> {
     private Context context;
     private List<Post> posts;
 
     public BooksAdapter(Context context, List<Post> posts){
         this.context = context;
         this.posts = posts;
-    }
-
-    public BooksAdapter(FeedActivity context, List<Post> allPosts) {
     }
 
     @NonNull
@@ -51,6 +49,7 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public int getItemCount() {
         return posts.size();
     }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvUsername;
@@ -65,9 +64,13 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             tvDescription = itemView.findViewById(R.id.tvDescription);
             displayPicture = itemView.findViewById(R.id.profilePicture);
         }
-        public void bind(com.example.thriftbooks.models.Post post)  {
+        public void bind(Post post)  {
             tvDescription.setText(post.getDescription());
             tvUsername.setText(post.getUser().getUsername());
+            ParseFile profileImage = post.getUser().getProfileImage();
+            if (profileImage != null) {
+                Glide.with(context).load(profileImage.getUrl()).into(displayPicture);
+            }
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivImage);
@@ -80,6 +83,7 @@ public class BooksAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     context.startActivity(i);
                 }
             });
+
         }
     }
     public void clear() {

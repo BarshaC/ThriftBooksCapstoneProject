@@ -42,6 +42,8 @@ public class ComposeFragment extends Fragment {
     private ImageView ivImageBook;
     private Button btnSubmit;
     private File photoFile;
+    private EditText etBookTitle;
+    private EditText etBookAuthor;
 
     public ComposeFragment() {
         // Required empty public constructor
@@ -60,8 +62,9 @@ public class ComposeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         etDescription = view.findViewById(R.id.etDescription);
         ivImageBook = view.findViewById(R.id.ivClickedBook);
-        btnSubmit = view.findViewById(R.id.btnSubmit);
-        btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
+        btnSubmit = view.findViewById(R.id.btnAddPhoto);
+        etBookTitle = view.findViewById(R.id.etBookTitle);
+        etBookAuthor = view.findViewById(R.id.etBookAuthor);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,10 +77,13 @@ public class ComposeFragment extends Fragment {
                     Toast.makeText(getContext(), "You must add image!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                String bookTitle = etBookTitle.getText().toString();
+                String bookAuthor = etBookAuthor.getText().toString();
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(description, currentUser, photoFile);
+                savePost(description, currentUser, bookTitle, bookAuthor, photoFile);
             }
         });
+        btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,9 +131,11 @@ public class ComposeFragment extends Fragment {
         return file;
     }
 
-    private void savePost(String description, ParseUser currentUser, File photoFile) {
+    private void savePost(String description, ParseUser currentUser, String bookTitle, String bookAuthor, File photoFile) {
         Post post = new Post();
         post.setDescription(description);
+        post.setBookTitle(bookTitle);
+        post.setBookAuthor(bookAuthor);
         post.setImage(new ParseFile(photoFile));
         post.setUser(currentUser);
         post.saveInBackground(new SaveCallback() {
@@ -138,7 +146,6 @@ public class ComposeFragment extends Fragment {
                     Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Saved the post!");
-                etDescription.setText("");
                 ivImageBook.setImageResource(0);
             }
         });

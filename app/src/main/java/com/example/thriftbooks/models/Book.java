@@ -1,4 +1,9 @@
 package com.example.thriftbooks.models;
 
-public class Book {
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
+@ParseClassName("Book")
+public class Book extends ParseObject {
+
 }

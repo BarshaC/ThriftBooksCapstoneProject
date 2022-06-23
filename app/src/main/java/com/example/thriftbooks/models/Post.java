@@ -1,16 +1,9 @@
 package com.example.thriftbooks.models;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
-import com.example.thriftbooks.R;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-
-import org.parceler.Parcel;
 
 
 @ParseClassName("Post")
@@ -26,7 +19,7 @@ public class Post extends ParseObject {
     public String getDescription() {
         return getString(KEY_BOOK_DESCRIPTION);
     }
-   public  void setDescription(String description) {
+    public  void setDescription(String description) {
         put(KEY_BOOK_DESCRIPTION, description);
    }
 
@@ -38,8 +31,15 @@ public class Post extends ParseObject {
         put(KEY_BOOK_IMAGE, parseFile);
     }
 
-    public ParseUser getUser() {
-        return getParseUser(KEY_USER);
+    public String getBookTitle() { return getString(KEY_BOOK_TITLE); }
+    public void setBookTitle(String titleBook) { put(KEY_BOOK_TITLE,titleBook); }
+
+    public String getBookAuthor() { return getString(KEY_BOOK_AUTHOR);}
+
+    public void setBookAuthor(String authorBook ) { put(KEY_BOOK_AUTHOR, authorBook);}
+
+    public User getUser() {
+        return (User) getParseUser(KEY_USER);
     }
 
     public void setUser(ParseUser user){
