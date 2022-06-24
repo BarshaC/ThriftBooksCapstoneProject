@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thriftbooks.activities.BookDetailsActivity;
-//import com.example.thriftbooks.activities.FeedActivity;
 import com.example.thriftbooks.models.Post;
 import com.parse.Parse;
 import com.parse.ParseFile;
@@ -60,7 +61,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
         private ImageView displayPicture;
         private TextView tvBookAuthor;
         private TextView tvBookTitle;
-        private TextView tvBookType;
+        private TextView tvBookType, tvBookCondition;
+        private ImageButton ibComment, ibMessage; //Gonna use ibMessage later for messaging the book owner
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,19 +70,24 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
             ivImage = itemView.findViewById(R.id.ivClickedBook);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             displayPicture = itemView.findViewById(R.id.profilePicture);
-            tvBookTitle = itemView.findViewById(R.id.tvTitle);
-            tvBookAuthor = itemView.findViewById(R.id.tvBookType);
+            tvBookTitle = itemView.findViewById(R.id.tvBookTitle);
+            tvBookAuthor = itemView.findViewById(R.id.tvBookAuthor);
             tvBookType = itemView.findViewById(R.id.tvBookType);
+            tvBookCondition = itemView.findViewById(R.id.tvBookCondition);
+            ibComment = itemView.findViewById(R.id.ibComment);
+            ibMessage = itemView.findViewById(R.id.ibMessage);
         }
         public void bind(Post post)  {
-            tvDescription.setText("Description: " + post.getDescription());
             tvUsername.setText(post.getUser().getUsername());
             tvBookTitle.setText("Title: " + post.getBookTitle());
-            tvBookAuthor.setText(post.getBookAuthor());
-            tvBookType.setText(post.getBookType());
+            tvBookAuthor.setText("Author: " + post.getBookAuthor());
+            tvDescription.setText("Description: " + post.getDescription());
+            tvBookCondition.setText("Condition: "+ post.getBookCondition());
+            tvBookType.setText("For: " + post.getBookType());
+
             ParseFile profileImage = post.getUser().getProfileImage();
             if (profileImage != null) {
-                Glide.with(context).load(profileImage.getUrl()).into(displayPicture);
+                Glide.with(context).load(profileImage.getUrl()).circleCrop().into(displayPicture);
             }
             ParseFile image = post.getImage();
             if (image != null) {

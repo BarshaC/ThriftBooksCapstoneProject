@@ -24,7 +24,7 @@
         android:id="@+id/etBookTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="120dp"
         android:ems="10"
         android:hint="Title of the book"
         android:minHeight="48dp"
@@ -45,6 +45,31 @@
         app:layout_constraintStart_toEndOf="@+id/ivClickedBook"
         app:layout_constraintTop_toBottomOf="@+id/etDescription" />
 
+    <Spinner
+        android:id="@+id/spinnerBookCondition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:spinnerMode="dropdown"
+        android:ems="10"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/ivClickedBook"
+        app:layout_constraintTop_toBottomOf="@+id/etBookAuthor" />
+    <Spinner
+        android:id="@+id/spinnerBookType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:spinnerMode="dropdown"
+        android:ems="10"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/ivClickedBook"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerBookCondition" />
+
     <Button
         android:id="@+id/btnCaptureImage"
         android:layout_width="wrap_content"
@@ -58,12 +83,12 @@
 
     <ImageView
         android:id="@+id/ivClickedBook"
-        android:layout_width="134dp"
-        android:layout_height="144dp"
+        android:layout_width="139dp"
+        android:layout_height="205dp"
         android:layout_marginStart="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/etBookAuthor"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        tools:layout_editor_absoluteY="123dp" />
 
     <Button
         android:id="@+id/btnAddPhoto"
@@ -76,5 +101,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="#9C27B0" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
