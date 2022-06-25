@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import com.example.thriftbooks.R;
 import com.example.thriftbooks.fragments.ComposeFragment;
 import com.example.thriftbooks.fragments.HomeFragment;
+import com.example.thriftbooks.fragments.LogoutFragment;
 import com.example.thriftbooks.fragments.ProfileFragment;
 import com.example.thriftbooks.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.actionSearch:
                         fragment = new SearchFragment();
+                        break;
+                    case R.id.actionLogout:
+                        fragment = new LogoutFragment();
                         break;
                     default:
                         break;

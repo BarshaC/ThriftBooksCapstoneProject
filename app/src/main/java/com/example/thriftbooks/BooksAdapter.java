@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.thriftbooks.activities.BookDetailsActivity;
 import com.example.thriftbooks.models.Post;
+import com.example.thriftbooks.models.User;
 import com.parse.Parse;
 import com.parse.ParseFile;
 
@@ -54,7 +55,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
         private TextView tvUsername;
         private ImageView ivImage;
         private TextView tvDescription;

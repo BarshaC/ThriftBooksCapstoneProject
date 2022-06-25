@@ -10,11 +10,9 @@ public class User extends ParseUser {
 
     public User() {
     }
-
     public ParseFile getProfileImage() {
         return getParseFile(KEY_IMAGE_PROFILE);
     }
-
     public void setProfileImage(ParseFile parseFile) {
         put(KEY_IMAGE_PROFILE, parseFile);
     }

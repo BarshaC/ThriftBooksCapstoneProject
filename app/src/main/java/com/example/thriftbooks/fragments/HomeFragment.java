@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment{
                 if (e != null) {
                     Log.e(TAG, "Issue with getting posts on HomePage",e);
                 } for (Post post: posts) {
-                    Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
+                    //Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
                 }
                 allPosts.addAll(posts);
                 swipeContainer.setRefreshing(false);

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.thriftbooks.R;
+import com.example.thriftbooks.models.User;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -33,7 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseUser user = new ParseUser(); // fix is somewhere here
+                User user = new User();
                 user.setUsername(etUsername.getText().toString());
                 user.setPassword(etPassword.getText().toString());
                 //user.setEmail(etEmail.getText().toString());

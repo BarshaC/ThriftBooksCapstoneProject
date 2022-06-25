@@ -64,8 +64,6 @@ public class Post extends ParseObject {
         return true;
     }
 
-    public void setPostComment(String bookCondition) { put(KEY_BOOK_COMMENT,bookCondition); }
-
     public User getUser() {
         return (User) getParseUser(KEY_USER);
     }
