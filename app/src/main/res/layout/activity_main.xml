@@ -9,9 +9,10 @@
 
     <FrameLayout
         android:id="@+id/flContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottomNavigation" />
+        android:layout_width="412dp"
+        android:layout_height="672dp"
+        android:layout_above="@id/bottomNavigation"
+        tools:layout_editor_absoluteX="-1dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"

@@ -19,30 +19,37 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.thriftbooks.R;
 import com.example.thriftbooks.models.Post;
-import com.example.thriftbooks.models.User;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ComposeFragment extends Fragment {
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1002;
     private static final String TAG = "ComposeFragment";
     public String photoFileName = "photo.jpg";
-    private EditText etDescription;
-    private Button btnCaptureImage;
-    private ImageView ivPostImage;
-    private Button btnSubmit;
+    private Button btnCaptureImage, btnSubmit;
+    private ImageView ivImageBook;
     private File photoFile;
+    private EditText etBookTitle, etBookAuthor, etDescription, etBookType;
+    private Spinner spinnerCondition, spinnerType;
+    public String [] bookCondition = {"Condition of Book","Torn", "Bad Cover","Good", "Like New"};
+    public String [] bookType = {"For Sale/Borrow/Rent","Sale", "Borrow","Rent"};
 
     public ComposeFragment() {
         // Required empty public constructor
@@ -53,16 +60,30 @@ public class ComposeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_compose, container, false);
+        View v = inflater.inflate(R.layout.fragment_compose, container, false);
+        return v;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         etDescription = view.findViewById(R.id.etDescription);
-        ivPostImage = view.findViewById(R.id.ivPostImage);
-        btnSubmit = view.findViewById(R.id.btnSubmit);
-        btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
+        ivImageBook = view.findViewById(R.id.ivClickedBook);
+        btnSubmit = view.findViewById(R.id.btnAddPhoto);
+        etBookTitle = view.findViewById(R.id.etBookTitle);
+        etBookAuthor = view.findViewById(R.id.etBookAuthor);
+        etBookType = view.findViewById(R.id.tvBookType);
+        //Spinner for Conditions of Books
+        spinnerCondition = view.findViewById(R.id.spinnerBookCondition);
+        ArrayAdapter <String> adapter1 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item,bookCondition);
+        adapter1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerCondition.setAdapter(adapter1);
+        //Spinner for types of Book for example : For Sale/Borrow/Rent
+        spinnerType = view.findViewById(R.id.spinnerBookType);
+        ArrayAdapter <String> adapter2 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item,bookType);
+        adapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerType.setAdapter(adapter2);
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,19 +92,23 @@ public class ComposeFragment extends Fragment {
                     Toast.makeText(getContext(), "You must add description", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (photoFile == null || ivPostImage.getDrawable() == null) {
+                if (photoFile == null || ivImageBook.getDrawable() == null) {
                     Toast.makeText(getContext(), "You must add image!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                String bookTitle = etBookTitle.getText().toString();
+                String bookAuthor = etBookAuthor.getText().toString();
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(description, currentUser, photoFile);
+                String valueBookCondition = spinnerCondition.getSelectedItem().toString();
+                String valueBookType = spinnerType.getSelectedItem().toString();
+                savePost(description, currentUser, bookTitle, bookAuthor,valueBookCondition, valueBookType, photoFile);
             }
         });
+        btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchCamera();
-
             }
         });
     }
@@ -94,7 +119,7 @@ public class ComposeFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                ivPostImage.setImageBitmap(takenImage);
+                ivImageBook.setImageBitmap(takenImage);
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
@@ -105,7 +130,7 @@ public class ComposeFragment extends Fragment {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         photoFile = getPhotoFileUri(photoFileName);
         Log.d(TAG, "failed to create directory");
-        Uri fileProvider = FileProvider.getUriForFile(getPhotoFileUri("photo.jpg"), "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
@@ -114,7 +139,6 @@ public class ComposeFragment extends Fragment {
 
     private File getPhotoFileUri(String fileName) {
         File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
-
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
             Log.d(TAG, "failed to create directory");
@@ -122,15 +146,18 @@ public class ComposeFragment extends Fragment {
 
         // Return the file target for the photo based on filename
         File file = new File(mediaStorageDir.getPath() + File.separator + fileName);
-
         return file;
     }
 
-    private void savePost(String description, ParseUser currentUser, File photoFile) {
+    private void savePost(String description, ParseUser currentUser, String bookTitle, String bookAuthor, String bookCondition, String bookType, File photoFile) {
         Post post = new Post();
         post.setDescription(description);
+        post.setBookTitle(bookTitle);
+        post.setBookAuthor(bookAuthor);
         post.setImage(new ParseFile(photoFile));
-        post.setUser((User) currentUser);
+        post.setBookType(bookType);
+        post.setBookCondition(bookCondition);
+        post.setUser(currentUser);
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -139,10 +166,8 @@ public class ComposeFragment extends Fragment {
                     Toast.makeText(getContext(), "Error while saving", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Saved the post!");
-                etDescription.setText("");
-                ivPostImage.setImageResource(0);
+                ivImageBook.setImageResource(0);
             }
         });
     }
-
 }

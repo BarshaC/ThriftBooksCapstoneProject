@@ -21,14 +21,33 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
+    private Button btnSignUp;
+    private Button btnForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if (ParseUser.getCurrentUser() != null) goMainActivity();
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnSignUp = findViewById(R.id.btnSignUp);
+        btnForgotPassword = findViewById(R.id.btnForgotPassword);
+        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 Toast.makeText(LoginActivity.this, "You can reset your password now!", Toast.LENGTH_SHORT).show(   );
+                 Intent i = new Intent(LoginActivity.this,ForgotCredentialActivity.class);
+            }
+        });
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(i);
+            }
+        });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(username, password);
             }
         });
+
     }
     private void loginUser(String username, String password) {
         Log.i(TAG, "Attempting to login user : " + username);
