@@ -57,7 +57,9 @@ public class ProfileFragment extends Fragment {
         swipeContainerProfile.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                queryPosts(0);
+                swipeContainerProfile.setRefreshing(false);
+                adaptProfile.notifyDataSetChanged();
+
             }
         });
         gridLayoutManager = new GridLayoutManager(getContext(),3);

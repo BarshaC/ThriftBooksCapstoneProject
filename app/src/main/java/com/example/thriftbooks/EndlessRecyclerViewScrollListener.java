@@ -11,7 +11,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     private int currentPage = 0;
     private int previousTotalItemCount = 0;
     private boolean loading = true;
-    private int startingPageIndex = 0;
+    private final int startingPageIndex = 0;
 
     public EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;

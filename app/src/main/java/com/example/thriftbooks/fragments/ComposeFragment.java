@@ -73,12 +73,12 @@ public class ComposeFragment extends Fragment {
         etBookTitle = view.findViewById(R.id.etBookTitle);
         etBookAuthor = view.findViewById(R.id.etBookAuthor);
         etBookType = view.findViewById(R.id.tvBookType);
-
+        //Spinner for Conditions of Books
         spinnerCondition = view.findViewById(R.id.spinnerBookCondition);
         ArrayAdapter <String> adapter1 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item,bookCondition);
         adapter1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerCondition.setAdapter(adapter1);
-
+        //Spinner for types of Book for example : For Sale/Borrow/Rent
         spinnerType = view.findViewById(R.id.spinnerBookType);
         ArrayAdapter <String> adapter2 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item,bookType);
         adapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);

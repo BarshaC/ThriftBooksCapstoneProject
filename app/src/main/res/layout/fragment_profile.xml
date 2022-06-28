@@ -12,21 +12,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:text="Barsha" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainerProfile"
-        android:layout_width="406dp"
-        android:layout_height="661dp"
-        tools:ignore="MissingConstraints"
+        android:layout_width="match_parent"
+        android:layout_height="624dp"
         tools:layout_editor_absoluteX="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProfilePosts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_centerInParent="true"
             android:padding="8dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -24,11 +24,12 @@
         android:theme="@style/Theme.ThriftBooks"
         tools:targetApi="31">
         <activity
-            android:name=".LogoutActivity"
+            android:name=".ForgotCredentialActivity"
             android:exported="false" />
         <activity
             android:name=".activities.SignUpActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.BookDetailsActivity"
             android:exported="false" />

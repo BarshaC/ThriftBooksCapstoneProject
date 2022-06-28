@@ -23,7 +23,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/actionLogout"
-        android:icon="@drawable/ic_baseline_arrow_outward_24"
+        android:icon="@drawable/ic_baseline_settings_24"
         android:title="Logout"
         app:showAsAction="always" />
 </menu>

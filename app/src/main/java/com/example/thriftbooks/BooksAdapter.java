@@ -27,8 +27,8 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> {
-    private Context context;
-    private List<Post> posts;
+    private final Context context;
+    private final List<Post> posts;
 
     public BooksAdapter(Context context, List<Post> posts){
         this.context = context;
@@ -55,14 +55,16 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvUsername;
-        private ImageView ivImage;
-        private TextView tvDescription;
-        private ImageView displayPicture;
-        private TextView tvBookAuthor;
-        private TextView tvBookTitle;
-        private TextView tvBookType, tvBookCondition;
-        private ImageButton ibComment, ibMessage; //Gonna use ibMessage later for messaging the book owner
+        private final TextView tvUsername;
+        private final ImageView ivImage;
+        private final TextView tvDescription;
+        private final ImageView displayPicture;
+        private final TextView tvBookAuthor;
+        private final TextView tvBookTitle;
+        private final TextView tvBookType;
+        private final TextView tvBookCondition;
+        private final ImageButton ibComment;
+        private final ImageButton ibMessage; //Gonna use ibMessage later for messaging the book owner
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

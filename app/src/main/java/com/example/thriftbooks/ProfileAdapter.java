@@ -19,8 +19,8 @@ import java.util.List;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
 
-    private Context profileContext;
-    private List<Post> posts;
+    private final Context profileContext;
+    private final List<Post> posts;
 
     public ProfileAdapter(Context profileContext, List<Post> posts) {
         this.profileContext = profileContext;
@@ -48,7 +48,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView ivClickedBookImage;
+        private final ImageView ivClickedBookImage;
 
 
         public ViewHolder(@NonNull View itemView) {

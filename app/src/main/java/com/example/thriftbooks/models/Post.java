@@ -52,6 +52,7 @@ public class Post extends ParseObject {
 
     public String getBookCondition() { return getString(KEY_BOOK_CONDITION); }
 
+
     public void setBookCondition(String bookCondition) { put(KEY_BOOK_CONDITION,bookCondition); }
 
     public boolean getPostComment() {
