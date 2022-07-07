@@ -33,7 +33,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvDescription"
+        android:id="@+id/tvPostDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -41,12 +41,12 @@
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/ivClickedBook"
-        app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor"
+        app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostBookAuthor"
         tools:text="Description" />
 
     <ImageView
-        android:id="@+id/ivClickedBook"
+        android:id="@+id/ivPostClickedBook"
         android:layout_width="wrap_content"
         android:layout_height="175dp"
         android:layout_marginStart="16dp"
@@ -57,18 +57,18 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvBookTitle"
+        android:id="@+id/tvPostBookTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:text="Title of the Book"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivClickedBook"
-        app:layout_constraintTop_toTopOf="@+id/ivClickedBook" />
+        app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
+        app:layout_constraintTop_toTopOf="@+id/ivPostClickedBook" />
 
     <TextView
-        android:id="@+id/tvBookAuthor"
+        android:id="@+id/tvPostBookAuthor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -77,29 +77,29 @@
         android:text="Author of the Book"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ivClickedBook"
-        app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
+        app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostBookTitle" />
 
     <TextView
-        android:id="@+id/tvBookType"
+        android:id="@+id/tvPostBookType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:text="For Sale"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivClickedBook"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+        app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostDescription" />
 
     <TextView
-        android:id="@+id/tvBookCondition"
+        android:id="@+id/tvPostBookCondition"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="56dp"
         android:text="Condition of the Book"
-        app:layout_constraintStart_toEndOf="@+id/ivClickedBook"
-        app:layout_constraintTop_toBottomOf="@+id/tvBookType" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
+        tools:layout_editor_absoluteY="206dp" />
 
     <ImageButton
         android:id="@+id/ibComment"
@@ -110,7 +110,7 @@
         android:background="@color/white"
         android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivClickedBook"
+        app:layout_constraintTop_toBottomOf="@+id/ivPostClickedBook"
         app:srcCompat="@drawable/ic_baseline_message_24" />
     <ImageButton
         android:id="@+id/ibMessage"
@@ -121,8 +121,18 @@
         android:background="@color/white"
         android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivClickedBook"
+        app:layout_constraintTop_toBottomOf="@+id/ivPostClickedBook"
         app:srcCompat="@drawable/ic_baseline_message_24" />
+
+    <TextView
+        android:id="@+id/timeAgo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="time ago"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

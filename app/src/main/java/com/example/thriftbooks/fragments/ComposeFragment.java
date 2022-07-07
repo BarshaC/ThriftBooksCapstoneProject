@@ -7,20 +7,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
-
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +20,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+
 import com.example.thriftbooks.R;
+import com.example.thriftbooks.models.Book;
 import com.example.thriftbooks.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -36,8 +34,6 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ComposeFragment extends Fragment {
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1002;
@@ -50,6 +46,7 @@ public class ComposeFragment extends Fragment {
     private Spinner spinnerCondition, spinnerType;
     public String [] bookCondition = {"Condition of Book","Torn", "Bad Cover","Good", "Like New"};
     public String [] bookType = {"For Sale/Borrow/Rent","Sale", "Borrow","Rent"};
+    private Book book;
 
     public ComposeFragment() {
         // Required empty public constructor
@@ -72,7 +69,7 @@ public class ComposeFragment extends Fragment {
         btnSubmit = view.findViewById(R.id.btnAddPhoto);
         etBookTitle = view.findViewById(R.id.etBookTitle);
         etBookAuthor = view.findViewById(R.id.etBookAuthor);
-        etBookType = view.findViewById(R.id.tvBookType);
+        etBookType = view.findViewById(R.id.tvPostBookType);
         //Spinner for Conditions of Books
         spinnerCondition = view.findViewById(R.id.spinnerBookCondition);
         ArrayAdapter <String> adapter1 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item,bookCondition);
