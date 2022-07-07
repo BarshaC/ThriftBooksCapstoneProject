@@ -2,20 +2,18 @@ package com.example.thriftbooks.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.thriftbooks.R;
 import com.example.thriftbooks.activities.LoginActivity;
-import com.example.thriftbooks.activities.SignUpActivity;
 import com.parse.ParseUser;
 
 public class LogoutFragment extends Fragment {

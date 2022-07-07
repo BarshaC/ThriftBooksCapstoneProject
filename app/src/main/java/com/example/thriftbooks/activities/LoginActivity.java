@@ -1,18 +1,22 @@
 package com.example.thriftbooks.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.thriftbooks.R;
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -23,6 +27,28 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private Button btnSignUp;
     private Button btnForgotPassword;
+
+//    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.action_bar_forgot_password, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionGoBack:  {
+                return true;
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public static void Launch(Context context) {
+        Intent forgot = new Intent(context, LoginActivity.class);
+        context.startActivity(forgot);
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                  Toast.makeText(LoginActivity.this, "You can reset your password now!", Toast.LENGTH_SHORT).show(   );
                  Intent i = new Intent(LoginActivity.this,ForgotCredentialActivity.class);
+                 startActivity(i);
             }
         });
         btnSignUp.setOnClickListener(new View.OnClickListener() {

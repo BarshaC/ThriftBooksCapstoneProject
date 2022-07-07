@@ -1,12 +1,12 @@
 package com.example.thriftbooks.activities;
 
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.os.Bundle;
-import android.util.Log;
 
 import com.example.thriftbooks.BooksAdapter;
 import com.example.thriftbooks.R;
@@ -38,7 +38,7 @@ public class FeedActivity extends AppCompatActivity {
         });
         rvBooks = findViewById(R.id.rvBooks1);
         allPosts = new ArrayList<>();
-        adapter = new BooksAdapter(this, allPosts);
+        //adapter = new BooksAdapter(this, allPosts);
         rvBooks.setAdapter(adapter);
         rvBooks.setLayoutManager(new LinearLayoutManager(this));
 

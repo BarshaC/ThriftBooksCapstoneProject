@@ -1,6 +1,14 @@
 package com.example.thriftbooks.fragments;
 
+import static com.example.thriftbooks.models.Post.KEY_CREATED_AT;
+
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,13 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.thriftbooks.EndlessRecyclerViewScrollListener;
 import com.example.thriftbooks.ProfileAdapter;
@@ -83,7 +84,7 @@ public class ProfileFragment extends Fragment {
         query.include(Post.KEY_USER);
         query.setLimit(25);
         query.setSkip(i);
-        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.addDescendingOrder(String.valueOf(KEY_CREATED_AT));
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {

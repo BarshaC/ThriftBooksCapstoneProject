@@ -1,14 +1,13 @@
 package com.example.thriftbooks.activities;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.FrameLayout;
 
 import com.example.thriftbooks.R;
 import com.example.thriftbooks.fragments.ComposeFragment;
@@ -49,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.actionLogout:
                         fragment = new LogoutFragment();
                         break;
+//                    case R.id.actionMessage:
+//                        fragment = new MessageFragment(); //Will later use it for message Fragment
                     default:
                         break;
                 }

@@ -1,15 +1,6 @@
 package com.example.thriftbooks.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,14 +8,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toolbar;
 
-import com.example.thriftbooks.BooksAdapter;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.thriftbooks.EndlessRecyclerViewScrollListener;
+import com.example.thriftbooks.PostsAdapter;
 import com.example.thriftbooks.R;
 import com.example.thriftbooks.models.Post;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
@@ -33,7 +29,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment{
     private static final String TAG = "PostsFragment";
-    protected BooksAdapter adapter;
+    protected PostsAdapter adapter;
     protected List<Post> allPosts;
     EndlessRecyclerViewScrollListener scrollListener;
     private RecyclerView rvBooks;
@@ -57,7 +53,7 @@ public class HomeFragment extends Fragment{
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.action_bar_menu, menu);
+        inflater.inflate(R.menu.action_bar_message, menu);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -89,7 +85,7 @@ public class HomeFragment extends Fragment{
         });
         rvBooks = view.findViewById(R.id.rvBooks);
         allPosts = new ArrayList<Post>();
-        adapter = new BooksAdapter(getContext(),allPosts);
+        adapter = new PostsAdapter(getContext(),allPosts);
         rvBooks.setAdapter(adapter);
         rvBooks.setLayoutManager(linearLayoutManager);
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {

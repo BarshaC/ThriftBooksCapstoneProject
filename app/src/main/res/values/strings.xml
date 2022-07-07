@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">ThriftBooks</string>
     <string name="settings"> Setting </string>
-
+    <string name="backArrow"> Go Back </string>
+    <string name="send"> Send </string>
+    <string name="profile_me">My Profile Pic</string>
+    <string name="profile_other">Other profile pic</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 
