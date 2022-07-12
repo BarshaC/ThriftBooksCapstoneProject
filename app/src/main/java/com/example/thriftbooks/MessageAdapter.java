@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thriftbooks.models.Message;
+import com.parse.ParseFile;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -21,6 +22,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     private List<Message> mMessages;
     private Context mContext;
     private String mUserId;
+    private String mSenderId;
+    private String mRecipientId;
     private static final int MESSAGE_OUT = 123;
     private static final int MESSAGE_IN = 150;
 
@@ -68,7 +71,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     private boolean isMe(int position) {
         Message message = mMessages.get(position);
-        return message.getUserId() != null && message.getUserId().equals(mUserId);
+        return message.getSenderId() != null && message.getSenderId().equals(mUserId);
     }
 
     public abstract class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -94,9 +97,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         @Override
         public void bindMessage(Message message) {
-            Glide.with(mContext).load(getProfileUrl(message.getUserId())).circleCrop().into(imageBuyer);
+            ParseFile image = message.getSenderId().getProfileImage();
+            if (image != null) {
+                Glide.with(mContext).load(image.getUrl()).into(imageBuyer);
+            }
+            name.setText(message.getSenderId().getUsername());
             body.setText(message.getBody());
-            body.setText(message.getUserId());
         }
     }
 
@@ -112,7 +118,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         @Override
         public void bindMessage(Message message) {
-            Glide.with(mContext).load(getProfileUrl(message.getUserId())).circleCrop().into(imageSeller);
+            ParseFile image = message.getReceiverId().getProfileImage();
+            if (image != null) {
+                Glide.with(mContext).load(image.getUrl()).into(imageSeller);
+            }
             body.setText(message.getBody());
         }
     }

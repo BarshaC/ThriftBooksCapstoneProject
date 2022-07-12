@@ -5,19 +5,14 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.thriftbooks.activities.BookDetailsActivity;
 import com.example.thriftbooks.models.Book;
-import com.example.thriftbooks.models.Post;
-import com.parse.ParseFile;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +52,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
         private TextView tvPageCount;
         private TextView tvPublisher;
         private TextView tvPublishedDate;
+        private ImageView ivPosterImage;
 
 
 
@@ -68,6 +64,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
             tvPageCount = itemView.findViewById(R.id.tvPageCount);
             tvPublishedDate = itemView.findViewById(R.id.tvPublishedDate);
             tvPublisher = itemView.findViewById(R.id.tvPublisher);
+            ivPosterImage = itemView.findViewById(R.id.ivBook);
 
         }
         public void bind(Book book) {
@@ -78,16 +75,13 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
             tvPublishedDate.setText("PublishedDate: " + book.getPublishedDate());
             tvPageCount.setText("Page: " + String.valueOf(book.getPageCount()));
             tvDescription.setText("Description: " + book.getAboutVolume());
-
-            //Use this code later to display picture of the actual book image if not get the picture from Picasso
-//            ivImage.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent i = new Intent(context, BookDetailsActivity.class);
-//                    i.putExtra("details", Parcels.wrap(post));
-//                    context.startActivity(i);
-//                }
-//           });
+            ivPosterImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, BookDetailsActivity.class);
+                    context.startActivity(i);
+                }
+           });
         }
     }
 

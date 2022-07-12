@@ -1,11 +1,18 @@
 <resources>
     <string name="app_name">ThriftBooks</string>
-    <string name="settings"> Setting </string>
+    <string name="message"> Message </string>
+    <string name="search"> Search </string>
     <string name="backArrow"> Go Back </string>
     <string name="send"> Send </string>
+    <string name="outgoing_message"> Your outgoing message. </string>
+    <string name="incoming_message"> Your incoming message. </string>
     <string name="profile_me">My Profile Pic</string>
     <string name="profile_other">Other profile pic</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="deliveryMessage"> Delivered </string>
+    <string name="buyerName"> Name of Buyer </string>
+    <string name="lastMessage"> Last Message from Buyer </string>
+    <string name="blockMessage"> You can block this person! </string>
+
 </resources>
 

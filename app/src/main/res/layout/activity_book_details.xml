@@ -26,7 +26,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="12dp"
         android:text="time ago"
-        app:layout_constraintBottom_toTopOf="@+id/tvPostBookTitle"
+        app:layout_constraintBottom_toTopOf="@+id/tvDetailBookTitle"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageButton
@@ -40,12 +40,12 @@
         app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
     <TextView
-        android:id="@+id/tvUsername"
+        android:id="@+id/username"
         android:layout_width="73dp"
         android:layout_height="23dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="68dp"
-        android:text="TextView"
+        android:text="barsha"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/profilePicture"
@@ -69,14 +69,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostBookAuthor"
+        app:layout_constraintStart_toEndOf="@+id/ivPostDetailBookPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailBookAuthor"
         tools:text="Description" />
 
     <ImageView
-        android:id="@+id/ivPostClickedBook"
+        android:id="@+id/ivPostDetailBookPhoto"
         android:layout_width="wrap_content"
         android:layout_height="175dp"
         android:layout_marginStart="12dp"
@@ -87,85 +85,75 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvPostBookTitle"
+        android:id="@+id/tvDetailBookTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="12dp"
         android:text="Title of the Book"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
-        app:layout_constraintTop_toTopOf="@+id/ivPostClickedBook" />
+        app:layout_constraintStart_toEndOf="@+id/ivPostDetailBookPhoto"
+        app:layout_constraintTop_toTopOf="@+id/ivPostDetailBookPhoto" />
 
     <TextView
-        android:id="@+id/tvPostBookAuthor"
+        android:id="@+id/tvDetailBookAuthor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="116dp"
         android:text="Author of the Book"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostBookTitle" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/ivPostDetailBookPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailBookTitle" />
 
     <TextView
-        android:id="@+id/tvPostBookType"
+        android:id="@+id/tvDetailBookType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:text="For Sale"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
+        app:layout_constraintStart_toEndOf="@+id/ivPostDetailBookPhoto"
         app:layout_constraintTop_toBottomOf="@+id/tvPostDescription" />
 
     <TextView
-        android:id="@+id/tvPostBookCondition"
+        android:id="@+id/tvDetailBookCondition"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:text="Condition of the Book"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostBookType" />
-
-    <ImageButton
-        android:id="@+id/ibComment"
-        android:layout_width="99dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="316dp"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPostClickedBook"
-        app:srcCompat="@drawable/ic_baseline_message_24" />
-
-    <ImageButton
-        android:id="@+id/ibMessage"
-        android:layout_width="99dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="316dp"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPostClickedBook"
-        app:srcCompat="@drawable/ic_baseline_message_24" />
+        app:layout_constraintStart_toEndOf="@+id/ivPostDetailBookPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailBookType" />
 
     <TextView
         android:id="@+id/moreAboutBook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="4dp"
         android:text="More About Book"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostBookCondition" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailBookCondition" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@+id/comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:text="Comments:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPostDetailBookPhoto" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

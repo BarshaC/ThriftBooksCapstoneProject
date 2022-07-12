@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.thriftbooks.models.Book;
 import com.example.thriftbooks.models.Comment;
 import com.example.thriftbooks.models.Message;
+import com.example.thriftbooks.models.MessageThread;
 import com.example.thriftbooks.models.Post;
 import com.example.thriftbooks.models.User;
 import com.parse.Parse;
@@ -22,6 +23,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Message.class);
         ParseObject.registerSubclass(Book.class);
         ParseObject.registerSubclass(Comment.class);
+        ParseObject.registerSubclass(MessageThread.class);
         OkHttpClient.Builder builder = new OkHttpClient.Builder(); //monitoring Parse traffic
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

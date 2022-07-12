@@ -4,23 +4,45 @@ import com.parse.ParseObject;
 
 @ParseClassName("Message")
 public class Message extends ParseObject {
-    public static final String USER_ID_KEY = "userId";
-    public static final String BODY_KEY = "body";
-    static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    public static final String MESSAGE_USER_ID_KEY = "userId";
+    public static final String MESSAGE_RECEIVER_ID_KEY = "recipientId";
+    public static final String MESSAGE_THREAD_ID_KEY = "threadId";
+    public static final String POST_ID_KEY = "postId";
+    public static final String BODY_MESSAGE_KEY = "body";
 
-    public String getUserId() {
-        return getString(USER_ID_KEY);
+    public User getSenderId() {
+        return (User) getParseUser(MESSAGE_USER_ID_KEY);
     }
 
-    public void setUserId(String userId) {
-        put(USER_ID_KEY, userId);
+    public void setSenderId(User senderId) {
+        put(MESSAGE_USER_ID_KEY, senderId);
+    }
+
+    public User getReceiverId() {
+        return (User) getParseUser(MESSAGE_USER_ID_KEY);
+    }
+
+    public void setReceiverId(User receiverId) {
+        put(MESSAGE_RECEIVER_ID_KEY, receiverId); }
+
+
+    public MessageThread getThreadId() { return (MessageThread) getParseObject(MESSAGE_THREAD_ID_KEY); }
+
+    public void setThreadId(MessageThread threadId) { put(MESSAGE_THREAD_ID_KEY, threadId); }
+
+    public Post getPostId() {
+         return (Post) getParseObject(POST_ID_KEY);
+    }
+
+    public void setPostId(Post postId) {
+        put(POST_ID_KEY, postId);
     }
 
     public String getBody() {
-        return getString(BODY_KEY);
+        return getString(BODY_MESSAGE_KEY);
     }
 
     public void setBody(String body) {
-        put(BODY_KEY, body);
+        put(BODY_MESSAGE_KEY, body);
     }
 }
