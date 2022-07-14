@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    android:id="@+id/cvThreadBuyerView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cvThreadBuyerView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -12,9 +11,9 @@
 
     <RelativeLayout
         android:id="@+id/rlThreadBuyerItem"
-        android:clickable="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="true">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ciProfileImage"
@@ -27,26 +26,43 @@
             android:layout_width="25dp"
             android:layout_height="25dp" />
 
-        <TextView
-            android:id="@+id/tvBuyerName"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_height="match_parent"
             android:layout_toEndOf="@id/ciProfileImage"
-            android:text="@string/buyerName"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvBuyerLastMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBuyerName"
-            android:layout_marginStart="4dp"
-            android:layout_toEndOf="@id/ciProfileImage"
-            android:maxLines="2"
-            android:text="@string/lastMessage"
-            android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/tvBuyerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/buyerName"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvBuyerLastMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvBuyerName"
+                android:layout_marginStart="4dp"
+                android:maxLines="2"
+                android:text="@string/lastMessage"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvBookTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvBuyerLastMessage"
+                android:layout_marginStart="4dp"
+                android:maxLines="2"
+                android:text="BOOK TITLE"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/ivBlocking"

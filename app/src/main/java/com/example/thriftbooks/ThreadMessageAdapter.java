@@ -1,10 +1,7 @@
 package com.example.thriftbooks;
 
-import static com.example.thriftbooks.models.MessageThread.TAG;
-
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.thriftbooks.activities.MessageActivity;
 import com.example.thriftbooks.models.MessageThread;
-import com.example.thriftbooks.models.Post;
 import com.example.thriftbooks.models.User;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 public class ThreadMessageAdapter extends RecyclerView.Adapter<ThreadMessageAdapter.ViewHolder> {
     private final Context context;
     private final List<MessageThread> threads;
@@ -61,15 +56,16 @@ public class ThreadMessageAdapter extends RecyclerView.Adapter<ThreadMessageAdap
         private final TextView lastMessage;
         private final CircleImageView image;
         private final RelativeLayout relativeLayout;
-        private final ImageView status, statusSeen;
+        private final TextView bookName;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             relativeLayout = itemView.findViewById(R.id.rlThreadBuyerItem);
             username = itemView.findViewById(R.id.tvBuyerName);
             lastMessage = itemView.findViewById(R.id.tvBuyerLastMessage);
             image = itemView.findViewById(R.id.ciProfileImage);
-            status = itemView.findViewById(R.id.ciOnlineStatus);
-            statusSeen = itemView.findViewById(R.id.ciOnlineStatus);
+            ImageView status = itemView.findViewById(R.id.ciOnlineStatus);
+            ImageView statusSeen = itemView.findViewById(R.id.ciOnlineStatus);
+            bookName = itemView.findViewById(R.id.tvBookTitle);
         }
 
         public void bind(MessageThread thread) {
@@ -79,8 +75,11 @@ public class ThreadMessageAdapter extends RecyclerView.Adapter<ThreadMessageAdap
             } catch(ParseException e) {
 
             }
+
             username.setText(buyer.getUsername());
             lastMessage.setText(thread.getMessageStarter());
+            bookName.setText(thread.getPostId().getBookTitle());
+
             ParseFile imageBuyer = buyer.getProfileImage();
             if (imageBuyer != null) {
                 Glide.with(context).load(imageBuyer.getUrl()).into(image);
@@ -89,28 +88,11 @@ public class ThreadMessageAdapter extends RecyclerView.Adapter<ThreadMessageAdap
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(context, MessageActivity.class);
+                    i.putExtra("messageThreadInfo", Parcels.wrap(thread));
                     context.startActivity(i);
 
                 }
             });
         }
-    }
-
-    private void queryThread() {
-        ParseQuery<MessageThread> query  = ParseQuery.getQuery(MessageThread.class);
-        query.include(Post.KEY_USER);
-        query.setLimit(25);
-        query.addDescendingOrder("createdAt");
-        query.findInBackground(new FindCallback<MessageThread>() {
-            @Override
-            public void done(List<MessageThread> threads, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting all the posts",e);
-                    return;
-                } for (MessageThread thread : threads) {
-                    Log.i(TAG, "Threads :" + thread.getPostId());
-                }
-            }
-        });
     }
 }

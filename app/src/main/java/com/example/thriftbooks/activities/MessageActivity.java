@@ -5,21 +5,27 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.thriftbooks.MessageAdapter;
 import com.example.thriftbooks.R;
 import com.example.thriftbooks.models.Message;
+import com.example.thriftbooks.models.MessageThread;
 import com.example.thriftbooks.models.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,32 +34,47 @@ public class MessageActivity extends AppCompatActivity {
     private static final String TAG = "MessageActivity";
     private EditText etMessage;
     private ImageButton ibSend;
+    private TextView username;
+    private ImageView userImage, otherUserImage;
     private MessageAdapter mAdapter;
     private RecyclerView rvMessage;
     private ArrayList<Message> mMessages;
     static final int MAX_MESSAGES_TO_SHOW = 50;
     boolean mFirstLoad;
+    private MessageThread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-
         if (ParseUser.getCurrentUser() != null ) {
             startWithCurrentUser();
         }
-
-
+        userImage = (ImageView) findViewById(R.id.ivProfileImage);
+        ParseFile image = thread.getBuyerId().getProfileImage();
+        if (image != null) {
+            Glide.with(this).load(image.getUrl()).into(userImage);
+        }
+        if (image != null) {
+            Glide.with(this).load(image.getUrl()).into(userImage);
+        }
+        refreshMessages();
     }
     void messagePosting() {
         etMessage = (EditText) findViewById(R.id.etMessage);
         rvMessage = (RecyclerView) findViewById(R.id.rvChat);
+        username = (TextView) findViewById(R.id.tvOtherUsername);
         mMessages = new ArrayList<>();
         mFirstLoad = true;
-        final String userId = ParseUser.getCurrentUser().getObjectId();
-        mAdapter = new MessageAdapter(MessageActivity.this, userId, mMessages);
+        thread = Parcels.unwrap(getIntent().getParcelableExtra("messageThreadInfo"));
+        final User currentUserId = thread.getSellerId();
+        final User otherUserId = thread.getBuyerId();
+        mAdapter = new MessageAdapter(MessageActivity.this, currentUserId, otherUserId, mMessages);
         rvMessage.setAdapter(mAdapter);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MessageActivity.this);
+        linearLayoutManager.setReverseLayout(true);
+        String usernameBuyer = thread.getBuyerId().getUsername();
+        username.setText(usernameBuyer);
         rvMessage.setLayoutManager(linearLayoutManager);
         ibSend = (ImageButton) findViewById(R.id.ibSend);
         ibSend.setOnClickListener(new View.OnClickListener() {
@@ -61,14 +82,14 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String data = etMessage.getText().toString();
                 Message message = new Message();
-                message.setSenderId((User) ParseUser.getCurrentUser());
+                message.setReceiverId(otherUserId);
+                message.setSenderId(currentUserId);
                 message.setBody(data);
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
-                            Toast.makeText(MessageActivity.this, "Successfully created message on Parse",
-                                    Toast.LENGTH_SHORT).show();
+                            refreshMessages();
                         } else {
                             Log.e(TAG, "Failed to save message", e);
                         }
@@ -103,26 +124,6 @@ public class MessageActivity extends AppCompatActivity {
 
     void startWithCurrentUser() {
         messagePosting();
-    }
-
-    private void queryMessages() {
-        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
-        query.include(Message.MESSAGE_THREAD_ID_KEY);
-        query.setLimit(25);
-        query.addDescendingOrder(Message.KEY_CREATED_AT);
-        //query.whereNotEqualTo(Message.KEY_THREAD_BUYER_ID, (User) ParseUser.getCurrentUser());
-        query.findInBackground(new FindCallback<Message>() {
-            @Override
-            public void done(List<Message> messages, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts on HomePage", e);
-                } for (Message message: messages) {
-                    Log.i(TAG, "Posts : " + message.getPostId() + ", " );
-                }
-                messages.addAll(messages);
-                mAdapter.notifyDataSetChanged();
-            }
-        });
     }
 
 }

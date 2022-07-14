@@ -13,12 +13,13 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/ivProfileOther"
-            android:layout_alignTop="@+id/ivProfileOther"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="4dp" />
+            android:layout_alignTop="@+id/ivProfileOther"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/ivProfileOther"
+            android:paddingBottom="4dp"
+            android:text="Username" />
 
         <ImageView
             android:id="@+id/ivProfileOther"
@@ -27,17 +28,18 @@
             android:layout_height="64dp"
             android:src="@mipmap/ic_launcher" />
         <TextView
+            android:id="@+id/tvIncomingMessage"
+            android:background="@drawable/style_bubble_incoming_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvBody"
-            android:layout_below="@+id/tvName"
-            android:layout_alignLeft="@+id/tvName"
-            android:paddingVertical="12dp"
-            android:paddingHorizontal="16dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="21dp"
+            android:layout_toStartOf="@+id/ivProfileMe"
             android:elevation="2dp"
-            android:textSize="18dp"
-            android:text="Someone else's message" />
-
+            android:padding="8dp"
+            android:text="@string/incoming_message"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <TextView

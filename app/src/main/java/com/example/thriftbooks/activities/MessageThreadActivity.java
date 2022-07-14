@@ -32,19 +32,19 @@ public class MessageThreadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_thread);
-        swipeContainer = findViewById(R.id.swipeContainerThreads);
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //queryThreads();
-                //Will have to put the recent message on top which has not been listed yet
-            }
-        });
         rvThreads = findViewById(R.id.rvMessageThreads);
         allThreads = new ArrayList<>();
         adapter = new ThreadMessageAdapter(this,allThreads);
         rvThreads.setAdapter(adapter);
         rvThreads.setLayoutManager(new LinearLayoutManager(this));
+        swipeContainer = findViewById(R.id.swipeContainerThreads);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryThreads();
+                //Will have to put the recent message on top which has not been listed yet
+            }
+        });
         queryThreads();
     }
     private void queryThreads() {
@@ -61,6 +61,7 @@ public class MessageThreadActivity extends AppCompatActivity {
                 } for (MessageThread thread: threads) {
                     Log.i(TAG, "Posts : " + thread.getPostId() + ", " );
                 }
+                allThreads.clear();
                 allThreads.addAll(threads);
                 swipeContainer.setRefreshing(false);
                 adapter.notifyDataSetChanged();

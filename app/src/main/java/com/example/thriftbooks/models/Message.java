@@ -4,22 +4,22 @@ import com.parse.ParseObject;
 
 @ParseClassName("Message")
 public class Message extends ParseObject {
-    public static final String MESSAGE_USER_ID_KEY = "userId";
-    public static final String MESSAGE_RECEIVER_ID_KEY = "recipientId";
+    public static final String MESSAGE_SENDER_ID_KEY = "senderId";
+    public static final String MESSAGE_RECEIVER_ID_KEY = "receiverId";
     public static final String MESSAGE_THREAD_ID_KEY = "threadId";
     public static final String POST_ID_KEY = "postId";
     public static final String BODY_MESSAGE_KEY = "body";
 
     public User getSenderId() {
-        return (User) getParseUser(MESSAGE_USER_ID_KEY);
+        return (User) getParseUser(MESSAGE_SENDER_ID_KEY);
     }
 
     public void setSenderId(User senderId) {
-        put(MESSAGE_USER_ID_KEY, senderId);
+        put(MESSAGE_SENDER_ID_KEY, senderId);
     }
 
     public User getReceiverId() {
-        return (User) getParseUser(MESSAGE_USER_ID_KEY);
+        return (User) getParseUser(MESSAGE_RECEIVER_ID_KEY);
     }
 
     public void setReceiverId(User receiverId) {
