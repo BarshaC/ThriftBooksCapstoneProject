@@ -8,10 +8,13 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation ="horizontal">
+        android:clipToPadding="false"
+        android:paddingVertical="10dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="15dp">
 
         <ImageView
             android:id="@+id/ivProfileMe"
@@ -24,19 +27,20 @@
 
         <TextView
             android:id="@+id/tvOutGoingMessage"
-            android:background="@drawable/style_bubble_outgoing_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="21dp"
-            android:layout_toStartOf="@+id/ivProfileMe"
+            android:layout_marginLeft="168dp"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/ivProfileMe"
+            android:background="@drawable/style_bubble_outgoing_message"
             android:elevation="2dp"
             android:padding="8dp"
-            android:text="@string/outgoing_message"
+            android:gravity="end"
+            android:text="Your outgoing message here"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="18dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/isSeen"
@@ -44,6 +48,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:text="@string/deliveryMessage"
+        android:textSize="10dp"
         android:textAlignment="textEnd" />
 
 </LinearLayout>

@@ -35,7 +35,7 @@ public class MessageActivity extends AppCompatActivity {
     private EditText etMessage;
     private ImageButton ibSend;
     private TextView username;
-    private ImageView userImage, otherUserImage;
+    private ImageView userImage;
     private MessageAdapter mAdapter;
     private RecyclerView rvMessage;
     private ArrayList<Message> mMessages;
@@ -82,7 +82,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String data = etMessage.getText().toString();
                 Message message = new Message();
-                message.setReceiverId(otherUserId);
+                message.setReceiver(otherUserId);
                 message.setSenderId(currentUserId);
                 message.setBody(data);
                 message.saveInBackground(new SaveCallback() {

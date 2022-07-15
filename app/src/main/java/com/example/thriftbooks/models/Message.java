@@ -5,7 +5,7 @@ import com.parse.ParseObject;
 @ParseClassName("Message")
 public class Message extends ParseObject {
     public static final String MESSAGE_SENDER_ID_KEY = "senderId";
-    public static final String MESSAGE_RECEIVER_ID_KEY = "receiverId";
+    public static final String MESSAGE_RECEIVER_POINTER_KEY = "receiverId";
     public static final String MESSAGE_THREAD_ID_KEY = "threadId";
     public static final String POST_ID_KEY = "postId";
     public static final String BODY_MESSAGE_KEY = "body";
@@ -18,12 +18,12 @@ public class Message extends ParseObject {
         put(MESSAGE_SENDER_ID_KEY, senderId);
     }
 
-    public User getReceiverId() {
-        return (User) getParseUser(MESSAGE_RECEIVER_ID_KEY);
+    public User getReceiver() {
+        return (User) getParseUser(MESSAGE_RECEIVER_POINTER_KEY);
     }
 
-    public void setReceiverId(User receiverId) {
-        put(MESSAGE_RECEIVER_ID_KEY, receiverId); }
+    public void setReceiver(User receiverId) {
+        put(MESSAGE_RECEIVER_POINTER_KEY, receiverId); }
 
 
     public MessageThread getThreadId() { return (MessageThread) getParseObject(MESSAGE_THREAD_ID_KEY); }
