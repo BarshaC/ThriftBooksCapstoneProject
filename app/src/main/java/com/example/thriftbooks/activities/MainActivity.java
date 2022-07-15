@@ -51,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.actionLogout:
                         fragment = new LogoutFragment();
                         break;
-//                    case R.id.actionMessage:
-//                        fragment = new MessageFragment(); //Will later use it for message Fragment
-//                        break;
                     default:
                         break;
                 }

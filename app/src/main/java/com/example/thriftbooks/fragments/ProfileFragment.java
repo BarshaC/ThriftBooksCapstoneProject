@@ -17,12 +17,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.thriftbooks.EndlessRecyclerViewScrollListener;
 import com.example.thriftbooks.ProfileAdapter;
 import com.example.thriftbooks.R;
 import com.example.thriftbooks.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -39,6 +41,8 @@ public class ProfileFragment extends Fragment {
     private SwipeRefreshLayout swipeContainerProfile;
     private GridLayoutManager gridLayoutManager;
     EndlessRecyclerViewScrollListener scrollListener;
+    private ImageView ivProfilePicture;
+    Post post;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -65,7 +69,13 @@ public class ProfileFragment extends Fragment {
         });
         gridLayoutManager = new GridLayoutManager(getContext(),3);
         tvGridUsername = view.findViewById(R.id.tvGridProfileUsername);
-        ivProfileBookImage = view.findViewById(R.id.ivGridBookImage);
+//        ivProfileBookImage = view.findViewById(R.id.ivGridBookImage);
+        ivProfilePicture = view.findViewById(R.id.ivProfilePicture);
+        Post post = new Post();
+        ParseFile image = post.getUser().getProfileImage();
+        if (image != null) {
+            Glide.with(this).load(image.getUrl()).circleCrop().into(ivProfileBookImage);
+        }
         rvBooksProfile = view.findViewById(R.id.rvProfilePosts);
         adaptProfile = new ProfileAdapter(getContext(), profilePosts);
         rvBooksProfile.setAdapter(adaptProfile);
@@ -94,6 +104,7 @@ public class ProfileFragment extends Fragment {
                     Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
                 }
                 profilePosts.addAll(posts);
+                Log.i(TAG, profilePosts.toString());
                 swipeContainerProfile.setRefreshing(false);
                 adaptProfile.notifyDataSetChanged();
             }

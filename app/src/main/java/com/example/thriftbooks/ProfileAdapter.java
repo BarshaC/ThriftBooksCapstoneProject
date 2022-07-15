@@ -1,7 +1,6 @@
 package com.example.thriftbooks;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.thriftbooks.models.Post;
 import com.parse.ParseFile;
-import com.parse.ParseUser;
 
 import java.util.List;
 
