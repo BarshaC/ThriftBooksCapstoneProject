@@ -3,9 +3,6 @@ package com.example.thriftbooks.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,9 +17,11 @@ import com.example.thriftbooks.EndlessRecyclerViewScrollListener;
 import com.example.thriftbooks.PostsAdapter;
 import com.example.thriftbooks.R;
 import com.example.thriftbooks.models.Post;
+import com.example.thriftbooks.models.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,27 +48,6 @@ public class HomeFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.action_bar_message, menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionSettings:  {
-                // navigate to settings screen
-                return true;
-            }
-            case R.id.actionSearch:  {
-                // navigate to settings screen
-                return false;
-            }
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
     }
 
     @Override
@@ -100,6 +78,7 @@ public class HomeFragment extends Fragment{
 
     private void queryPosts(int i) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.whereNotEqualTo(Post.KEY_USER, (User) ParseUser.getCurrentUser());
         query.include(Post.KEY_USER);
         query.setLimit(25);
         query.setSkip(i);
@@ -110,7 +89,7 @@ public class HomeFragment extends Fragment{
                 if (e != null) {
                     Log.e(TAG, "Issue with getting posts on HomePage",e);
                 } for (Post post: posts) {
-                    //Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
+                    Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
                 }
                 allPosts.addAll(posts);
                 swipeContainer.setRefreshing(false);

@@ -1,6 +1,7 @@
 package com.example.thriftbooks;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,44 +13,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thriftbooks.models.Message;
+import com.example.thriftbooks.models.MessageThread;
+import com.example.thriftbooks.models.User;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
+    private static final String TAG = "MessageAdapter";
     private List<Message> mMessages;
     private Context mContext;
-    private String mUserId;
-    private static final int MESSAGE_OUT = 123;
-    private static final int MESSAGE_IN = 150;
+    private final User mUserId;
+    private final User mReceiverId;
+    private static final int MESSAGE_OUT = 1;
+    private static final int MESSAGE_IN = 2;
+    private MessageThread thread;
+    private User currentUser;
 
-    public MessageAdapter(Context context, String mUserId, List<Message> messages) {
+
+    public MessageAdapter(Context context, User userId, User otherUserId, List<Message> messages) {
         mMessages = messages;
-        this.mUserId = mUserId;
+        this.mUserId = userId;
+        this.mReceiverId = otherUserId;
         mContext = context;
-    }
-
-    @NonNull
-    @Override
-    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-        if (viewType == MESSAGE_IN) {
-            View viewInflater = inflater.inflate(R.layout.incoming_messages,parent, false);
-            return new IncomingMessageViewHolder(viewInflater);
-        } else if (viewType == MESSAGE_OUT) {
-            View viewInflater = inflater.inflate(R.layout.outgoing_messages, parent, false);
-            return new OutgoingMessageViewHolder(viewInflater);
-        } else {
-            throw new IllegalArgumentException("Unknown view Type");
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-        Message message = mMessages.get(position);
-        holder.bindMessage(message);
     }
 
     @Override
@@ -66,9 +56,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         return mMessages.size();
     }
 
+    @Override
+    public void onBindViewHolder(MessageViewHolder holder, int position) {
+        Message message = mMessages.get(position);
+        holder.bindMessage(message);
+    }
+
     private boolean isMe(int position) {
         Message message = mMessages.get(position);
-        return message.getUserId() != null && message.getUserId().equals(mUserId);
+        return message.getSenderId() != null && message.getSenderId().getObjectId().equals(ParseUser.getCurrentUser().getObjectId());
     }
 
     public abstract class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -80,43 +76,76 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     public class IncomingMessageViewHolder extends MessageViewHolder {
-        ImageView imageBuyer;
+        ImageView imageOther;
         TextView body;
         TextView name;
 
 
         public IncomingMessageViewHolder(View itemView) {
             super(itemView);
-            imageBuyer = (ImageView) itemView.findViewById(R.id.ivProfileOther);
-            body = (TextView) itemView.findViewById(R.id.tvBody);
-            name = (TextView) itemView.findViewById(R.id.tvName);
+            imageOther = (ImageView) itemView.findViewById(R.id.ivProfileOther);
+            body = (TextView) itemView.findViewById(R.id.tvIncomingMessage);
         }
 
         @Override
         public void bindMessage(Message message) {
-            Glide.with(mContext).load(getProfileUrl(message.getUserId())).circleCrop().into(imageBuyer);
+            User buyer = (User) new User();
+            try {
+                buyer = (User) message.getSenderId().fetchIfNeeded();
+
+            } catch (ParseException e){
+                Log.e(TAG, "Error: " + e);
+
+            }
+            ParseFile image = (ParseFile) buyer.getProfileImage();
+            Glide.with(mContext).load(image.getUrl()).circleCrop().into(imageOther);
             body.setText(message.getBody());
-            body.setText(message.getUserId());
         }
     }
 
     public class OutgoingMessageViewHolder extends MessageViewHolder {
-        ImageView imageSeller;
+        ImageView imageCurrentUser;
         TextView body;
 
         public OutgoingMessageViewHolder(View itemView) {
             super(itemView);
-            imageSeller = (ImageView) itemView.findViewById(R.id.ivProfileMe);
-            body = (TextView) itemView.findViewById(R.id.tvBody);
+            imageCurrentUser = (ImageView) itemView.findViewById(R.id.ivProfileMe);
+            body = (TextView) itemView.findViewById(R.id.tvOutGoingMessage);
         }
 
         @Override
         public void bindMessage(Message message) {
-            Glide.with(mContext).load(getProfileUrl(message.getUserId())).circleCrop().into(imageSeller);
+            User seller = (User) new User();
+            try {
+               seller = (User) message.getReceiver().fetchIfNeeded();
+
+            } catch (ParseException e){
+                Log.e(TAG, "Error: " + e);
+            }
+            ParseFile image = (ParseFile) seller.getProfileImage();
+            if (image != null) {
+                Glide.with(mContext).load(image.getUrl()).circleCrop().into(imageCurrentUser);
+            } else {
+                Glide.with(mContext).load(getProfileUrl(message.getReceiver().toString())).circleCrop().into(imageCurrentUser);
+            }
             body.setText(message.getBody());
         }
     }
 
+    @Override
+    public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        if (viewType == MESSAGE_IN) {
+            View viewInflater = inflater.inflate(R.layout.incoming_messages, parent, false);
+            return new IncomingMessageViewHolder(viewInflater);
+        } else if (viewType == MESSAGE_OUT) {
+            View viewInflater = inflater.inflate(R.layout.outgoing_messages, parent, false);
+            return new OutgoingMessageViewHolder(viewInflater);
+        } else {
+            throw new IllegalArgumentException("Unknown view Type");
+        }
+    }
     private static String getProfileUrl(final String userId) {
         String hex = "";
         try {
@@ -129,4 +158,5 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         }
         return "https://www.gravatar.com/avatar/" + hex + "?d=identicon";
     }
+
 }

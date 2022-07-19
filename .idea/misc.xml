@@ -6,32 +6,56 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="../../Library/Android/sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.40307971014492755" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_add_box_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_outward_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_exit_to_app_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_local_library_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_south_east_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_textsms_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_book_details.xml" value="0.11775362318840579" />
+        <entry key="app/src/main/res/drawable/style_bubble_incoming_message.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/style_bubble_outgoing_message.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_book_details.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_change_profile_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_comment.xml" value="0.16210739614994935" />
+        <entry key="app/src/main/res/layout/activity_email_verification.xml" value="0.221875" />
         <entry key="app/src/main/res/layout/activity_feed.xml" value="0.17708333333333334" />
         <entry key="app/src/main/res/layout/activity_forgot_credential.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.29257246376811596" />
         <entry key="app/src/main/res/layout/activity_logout.xml" value="0.23229166666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29257246376811596" />
-        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_message.xml" value="0.16818642350557245" />
+        <entry key="app/src/main/res/layout/activity_message_thread.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.27811187744140625" />
         <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.29257246376811596" />
+        <entry key="app/src/main/res/layout/book_search_item.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/bottom_sheet_profile_change.xml" value="0.19429347826086957" />
+        <entry key="app/src/main/res/layout/fragment_change_profile_pic.xml" value="0.160081053698075" />
         <entry key="app/src/main/res/layout/fragment_compose.xml" value="0.1697061803444782" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1697061803444782" />
         <entry key="app/src/main/res/layout/fragment_logout.xml" value="0.16111111111111112" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.161231884057971" />
-        <entry key="app/src/main/res/layout/item_post.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/profile_grid_view.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_message.xml" value="0.21965579710144928" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_profile_bottom_sheet.xml" value="0.16058763931104356" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.19927536231884058" />
+        <entry key="app/src/main/res/layout/incoming_messages.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/item_post.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/outgoing_messages.xml" value="0.34699044580276006" />
+        <entry key="app/src/main/res/layout/profile_fragment_upper_itemview.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/profile_grid_view.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/thread_message_item_buyers.xml" value="0.3424317617866005" />
+        <entry key="app/src/main/res/menu/action_bar_forgot_password.xml" value="0.45" />
         <entry key="app/src/main/res/menu/action_bar_login.xml" value="0.2125" />
+        <entry key="app/src/main/res/menu/action_bar_logout.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/menu/action_bar_menu.xml" value="0.34479166666666666" />
+        <entry key="app/src/main/res/menu/action_bar_message.xml" value="0.3458333333333333" />
         <entry key="app/src/main/res/menu/action_bar_search.xml" value="0.1703125" />
         <entry key="app/src/main/res/menu/action_bar_signup.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.18611111111111112" />

@@ -55,7 +55,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
     implementation 'com.codepath.libraries:asynchttpclient:2.2.0'
     implementation platform('com.google.firebase:firebase-bom:30.2.0')
-//    implementation 'com.google.firebase:firebase-analytics'
     implementation "com.github.parse-community.Parse-SDK-Android:parse:1.26.0"
     implementation 'com.github.parse-community:ParseLiveQuery-Android:1.2.2'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
 }
