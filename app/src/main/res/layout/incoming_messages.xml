@@ -11,21 +11,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/ivProfileOther"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/ivProfileOther"
-            android:paddingBottom="4dp"
-            android:text="Username" />
-
         <ImageView
             android:id="@+id/ivProfileOther"
             android:layout_alignParentLeft="true"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_marginStart="15dp"
             android:src="@mipmap/ic_launcher" />
         <TextView
             android:id="@+id/tvIncomingMessage"
@@ -47,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:text="Delivered"
+        android:text="@string/deliveryMessage"
         android:textAlignment="textEnd"
         android:visibility="gone" />
 

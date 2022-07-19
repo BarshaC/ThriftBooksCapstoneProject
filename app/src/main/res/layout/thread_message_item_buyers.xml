@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -58,7 +57,6 @@
                 android:layout_below="@+id/tvBuyerLastMessage"
                 android:layout_marginStart="4dp"
                 android:maxLines="2"
-                android:text="BOOK TITLE"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 

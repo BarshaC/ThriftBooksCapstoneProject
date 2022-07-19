@@ -71,7 +71,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private final ImageButton ibComment;
         private final Button btnSend;
         private final EditText etSendMessage;
-        //private final ImageButton ibMessage; //Gonna use ibMessage later for messaging the book owner
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,7 +83,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvBookType = itemView.findViewById(R.id.tvPostBookType);
             tvBookCondition = itemView.findViewById(R.id.tvPostBookCondition);
             ibComment = itemView.findViewById(R.id.ibComment);
-            //ibMessage = itemView.findViewById(R.id.ibMessage); //Will change this later if needed
             timeAgo = itemView.findViewById(R.id.timeAgo);
             tvMoreAboutPost = itemView.findViewById(R.id.tvMoreDetail);
             btnSend = itemView.findViewById(R.id.btnInterestedInBook);

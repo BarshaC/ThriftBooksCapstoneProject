@@ -1,8 +1,11 @@
 package com.example.thriftbooks.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,6 +61,30 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        bottomNavigationView.setSelectedItemId(R.id.actionCompose);
+        bottomNavigationView.setSelectedItemId(R.id.actionHome);
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.action_bar_message, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case R.id.actionMessage:
+                Intent i = new Intent(MainActivity.this, MessageThreadActivity.class);
+                startActivity(i);
+                Toast
+                        .makeText(
+                                getApplicationContext(),
+                                "Message",
+                                Toast.LENGTH_SHORT)
+                        .show();
+                return true;
+        }
+        return (super.onOptionsItemSelected(item));
     }
 }

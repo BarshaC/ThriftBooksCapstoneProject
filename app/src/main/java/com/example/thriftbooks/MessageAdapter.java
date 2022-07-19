@@ -1,6 +1,7 @@
 package com.example.thriftbooks;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     private static final int MESSAGE_OUT = 1;
     private static final int MESSAGE_IN = 2;
     private MessageThread thread;
+    private User currentUser;
 
 
     public MessageAdapter(Context context, User userId, User otherUserId, List<Message> messages) {
@@ -43,9 +45,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @Override
     public int getItemViewType(int position) {
         if (isMe(position)) {
-            return MESSAGE_IN;
-        } else {
             return MESSAGE_OUT;
+        } else {
+            return MESSAGE_IN;
         }
     }
 
@@ -62,7 +64,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     private boolean isMe(int position) {
         Message message = mMessages.get(position);
-        return message.getSenderId() != null && message.getSenderId().getObjectId().equals(ParseUser.getCurrentUser().getObjectId());    }
+        return message.getSenderId() != null && message.getSenderId().getObjectId().equals(ParseUser.getCurrentUser().getObjectId());
+    }
 
     public abstract class MessageViewHolder extends RecyclerView.ViewHolder {
         public MessageViewHolder(@NonNull View itemView) {
@@ -82,7 +85,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             super(itemView);
             imageOther = (ImageView) itemView.findViewById(R.id.ivProfileOther);
             body = (TextView) itemView.findViewById(R.id.tvIncomingMessage);
-            name = (TextView) itemView.findViewById(R.id.tvName);
         }
 
         @Override
@@ -92,9 +94,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 buyer = (User) message.getSenderId().fetchIfNeeded();
 
             } catch (ParseException e){
+                Log.e(TAG, "Error: " + e);
 
             }
-            name.setText(buyer.getUsername());
             ParseFile image = (ParseFile) buyer.getProfileImage();
             Glide.with(mContext).load(image.getUrl()).circleCrop().into(imageOther);
             body.setText(message.getBody());
@@ -117,10 +119,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             try {
                seller = (User) message.getReceiver().fetchIfNeeded();
 
-
-
             } catch (ParseException e){
-
+                Log.e(TAG, "Error: " + e);
             }
             ParseFile image = (ParseFile) seller.getProfileImage();
             if (image != null) {

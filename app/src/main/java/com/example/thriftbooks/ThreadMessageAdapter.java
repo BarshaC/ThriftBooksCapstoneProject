@@ -1,7 +1,10 @@
 package com.example.thriftbooks;
 
+import static com.example.thriftbooks.models.MessageThread.TAG;
+
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +76,7 @@ public class ThreadMessageAdapter extends RecyclerView.Adapter<ThreadMessageAdap
             try{
                 buyer = (User) thread.getBuyerId().fetchIfNeeded();
             } catch(ParseException e) {
-
+                Log.e(TAG, "Error" + e);
             }
 
             username.setText(buyer.getUsername());
