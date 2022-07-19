@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -106,7 +106,10 @@ public class HomeFragment extends Fragment{
             public void done(List<Post> posts, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with getting posts on HomePage",e);
-                } for (Post post: posts) {
+                    Toast.makeText(getContext(),"Issue with getting posts!",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                for (Post post: posts) {
                     Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
                 }
                 allPosts.addAll(posts);
@@ -115,4 +118,5 @@ public class HomeFragment extends Fragment{
             }
         });
     }
+
 }
