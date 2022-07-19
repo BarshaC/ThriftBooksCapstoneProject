@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +18,7 @@ import com.parse.ParseUser;
 
 public class LogoutFragment extends Fragment {
     private static final String TAG = "LogoutFragment";
-    private Button tempLogoutBtn;
+    private ImageButton tempLogoutBtn;
     public LogoutFragment() {
         // Required empty public constructor
     }
@@ -33,7 +33,7 @@ public class LogoutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tempLogoutBtn = view.findViewById(R.id.tempLogoutBtn);
+        tempLogoutBtn = view.findViewById(R.id.ibLogout);
         tempLogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

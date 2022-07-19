@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        etUsername = findViewById(R.id.etEditUsername);
         final boolean[] isValid = new boolean[1];
         if (ParseUser.getCurrentUser() != null) {
             if (!isValid[0]){
@@ -71,9 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 ParseUser.logOut();
                 finish();
             }
-            //goMainActivity();
         }
-        etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnSignUp = findViewById(R.id.btnSignUp);

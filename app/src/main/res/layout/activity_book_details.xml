@@ -7,18 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".models.Post">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarForgotPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/teal_700"
-        android:minHeight="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@android:color/white"></androidx.appcompat.widget.Toolbar>
-
     <TextView
         android:id="@+id/timeAgo"
         android:layout_width="wrap_content"
@@ -29,23 +17,12 @@
         app:layout_constraintBottom_toTopOf="@+id/tvDetailBookTitle"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageButton
-        android:id="@+id/ibBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/teal_700"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
-
     <TextView
         android:id="@+id/username"
         android:layout_width="73dp"
         android:layout_height="23dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="68dp"
-        android:text="string/username"
+        android:layout_marginTop="12dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/profilePicture"
@@ -57,9 +34,10 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarForgotPassword"
+        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -78,10 +56,10 @@
         android:layout_width="wrap_content"
         android:layout_height="175dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profilePicture"
+        app:layout_constraintTop_toBottomOf="@+id/username"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView

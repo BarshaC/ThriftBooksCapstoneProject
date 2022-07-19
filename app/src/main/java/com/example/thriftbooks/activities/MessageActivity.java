@@ -43,6 +43,7 @@ public class MessageActivity extends AppCompatActivity {
     boolean mFirstLoad;
     private MessageThread thread;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,7 @@ public class MessageActivity extends AppCompatActivity {
             Glide.with(this).load(image.getUrl()).into(userImage);
         }
         refreshMessages();
+
     }
     void messagePosting() {
         etMessage = (EditText) findViewById(R.id.etMessage);
@@ -125,5 +127,4 @@ public class MessageActivity extends AppCompatActivity {
     void startWithCurrentUser() {
         messagePosting();
     }
-
 }

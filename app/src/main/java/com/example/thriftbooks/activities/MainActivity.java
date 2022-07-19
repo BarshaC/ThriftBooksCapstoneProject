@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private BottomNavigationView bottomNavigationView;
+    HomeFragment homeFragment = new HomeFragment(this);
+    ComposeFragment composeFragment = new ComposeFragment(this);
     private FrameLayout flContainer;
 
     @Override
@@ -37,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 switch (item.getItemId()) {
                     case R.id.actionHome:
-                        fragment = new HomeFragment();
+                        fragment = homeFragment;
                         break;
                     case R.id.actionCompose:
-                        fragment = new ComposeFragment();
+                        fragment = composeFragment;
                         break;
                     case R.id.actionProfile:
                         fragment = new ProfileFragment();
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+        getMenuInflater().inflate(R.menu.action_bar_message, menu);
         return true;
     }
 

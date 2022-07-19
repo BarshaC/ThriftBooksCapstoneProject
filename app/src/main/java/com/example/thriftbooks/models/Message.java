@@ -31,7 +31,7 @@ public class Message extends ParseObject {
     public void setThreadId(MessageThread threadId) { put(MESSAGE_THREAD_ID_KEY, threadId); }
 
     public Post getPostId() {
-         return (Post) getParseObject(POST_ID_KEY);
+        return (Post) getParseObject(POST_ID_KEY);
     }
 
     public void setPostId(Post postId) {

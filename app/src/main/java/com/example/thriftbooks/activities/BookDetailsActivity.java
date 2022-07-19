@@ -1,9 +1,6 @@
 package com.example.thriftbooks.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +19,6 @@ public class BookDetailsActivity extends AppCompatActivity {
     private static final String TAG = "BookDetailsActivity";
     private TextView username;
     private ImageView displayPicture;
-    private ImageButton backToMain;
     private ImageView ivImage;
     private TextView booktitle, bookAuthor, bookType, bookCondition, timestamp;
     private Post post;
@@ -55,15 +51,6 @@ public class BookDetailsActivity extends AppCompatActivity {
         if (image != null) {
             Glide.with(this).load(image.getUrl()).into(ivImage);
         }
-        backToMain = (ImageButton) findViewById(R.id.ibBack);
-        backToMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(BookDetailsActivity.this, MainActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
     }
 
 }
