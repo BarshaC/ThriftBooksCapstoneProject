@@ -16,8 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thriftbooks.R;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseSession;
 import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
@@ -54,7 +56,23 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        if (ParseUser.getCurrentUser() != null) goMainActivity();
+        final boolean[] isValid = new boolean[1];
+        if (ParseUser.getCurrentUser() != null) {
+            if (!isValid[0]){
+                ParseSession.getCurrentSessionInBackground(new GetCallback<ParseSession>() {
+                    @Override
+                    public void done(ParseSession object, ParseException e) {
+                        isValid[0] = object.getSessionToken() != null && !object.getSessionToken().isEmpty();
+                    }
+                });
+                if(!isValid[0]){
+                    goMainActivity();
+                }
+                ParseUser.logOut();
+                finish();
+            }
+            //goMainActivity();
+        }
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
