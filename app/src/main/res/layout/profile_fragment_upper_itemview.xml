@@ -33,6 +33,7 @@
             android:text="Posts" />
 
         <Button
+            android:id="@+id/btnEditProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvGridProfileUsername"
@@ -44,5 +45,13 @@
 
 
     </RelativeLayout>
+
+    <View
+        android:id="@+id/dividerProfileFragment"
+        android:backgroundTint="@color/teal_700"
+        android:layout_width="match_parent"
+        android:layout_below="@id/LLUserInfo"
+        android:layout_height="3dp"
+        android:background="?android:attr/listDivider" />
 
 </RelativeLayout>

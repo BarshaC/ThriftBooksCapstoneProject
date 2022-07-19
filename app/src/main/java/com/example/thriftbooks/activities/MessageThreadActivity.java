@@ -52,6 +52,7 @@ public class MessageThreadActivity extends AppCompatActivity {
         query.include(MessageThread.KEY_THREAD_POST_ID);
         query.setLimit(25);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.whereEqualTo(MessageThread.KEY_THREAD_SELLER_ID,(User) ParseUser.getCurrentUser());
         query.whereNotEqualTo(MessageThread.KEY_THREAD_BUYER_ID, (User) ParseUser.getCurrentUser());
         query.findInBackground(new FindCallback<MessageThread>() {
             @Override

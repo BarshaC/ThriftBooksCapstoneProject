@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/actionMessage"
-        android:icon="@drawable/ic_baseline_textsms_24"
-        android:title="@string/message"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/actionLogout"
+        android:icon="@drawable/ic_baseline_exit_to_app_24"
+        android:title="@string/logout"
+        app:showAsAction="always"/>
 
 </menu>

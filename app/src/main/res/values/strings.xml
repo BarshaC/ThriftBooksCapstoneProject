@@ -4,6 +4,7 @@
     <string name="search"> Search </string>
     <string name="backArrow"> Go Back </string>
     <string name="send"> Send </string>
+    <string name="logout"> Logout </string>
     <string name="outgoing_message"> Your outgoing message. </string>
     <string name="incoming_message"> Your incoming message. </string>
     <string name="profile_me">My Profile Pic</string>
@@ -13,6 +14,7 @@
     <string name="buyerName"> Name of Buyer </string>
     <string name="lastMessage"> Last Message from Buyer </string>
     <string name="blockMessage"> You can block this person! </string>
-
+    <string name="channel_name"> Messages </string>
+    <string name="channel_description"> Message From ThriftBooks </string>
 </resources>
 

@@ -26,6 +26,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.example.thriftbooks.R;
+import com.example.thriftbooks.activities.MainActivity;
 import com.example.thriftbooks.models.Book;
 import com.example.thriftbooks.models.Post;
 import com.parse.ParseException;
@@ -47,9 +48,15 @@ public class ComposeFragment extends Fragment {
     public String [] bookCondition = {"Condition of Book","Torn", "Bad Cover","Good", "Like New"};
     public String [] bookType = {"For Sale/Borrow/Rent","Sale", "Borrow","Rent"};
     private Book book;
+    MainActivity activity;
 
     public ComposeFragment() {
         // Required empty public constructor
+    }
+
+    public ComposeFragment(MainActivity mainActivity)
+    {
+        activity = mainActivity;
     }
 
 
@@ -64,6 +71,7 @@ public class ComposeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        activity.getSupportActionBar().hide();
         etDescription = view.findViewById(R.id.etDescription);
         ivImageBook = view.findViewById(R.id.ivClickedBook);
         btnSubmit = view.findViewById(R.id.btnAddPhoto);

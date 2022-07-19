@@ -16,6 +16,7 @@ import com.example.thriftbooks.models.MessageThread;
 import com.example.thriftbooks.models.User;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -61,8 +62,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     private boolean isMe(int position) {
         Message message = mMessages.get(position);
-        return message.getSenderId() != null && message.getSenderId().equals(mUserId);
-    }
+        return message.getSenderId() != null && message.getSenderId().getObjectId().equals(ParseUser.getCurrentUser().getObjectId());    }
 
     public abstract class MessageViewHolder extends RecyclerView.ViewHolder {
         public MessageViewHolder(@NonNull View itemView) {
@@ -115,7 +115,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public void bindMessage(Message message) {
             User seller = (User) new User();
             try {
-               seller = (User) message.getReceiverId().fetchIfNeeded();
+               seller = (User) message.getReceiver().fetchIfNeeded();
+
 
 
             } catch (ParseException e){
@@ -125,7 +126,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             if (image != null) {
                 Glide.with(mContext).load(image.getUrl()).circleCrop().into(imageCurrentUser);
             } else {
-                Glide.with(mContext).load(getProfileUrl(message.getReceiverId().toString())).circleCrop().into(imageCurrentUser);
+                Glide.with(mContext).load(getProfileUrl(message.getReceiver().toString())).circleCrop().into(imageCurrentUser);
             }
             body.setText(message.getBody());
         }

@@ -1,12 +1,15 @@
 package com.example.thriftbooks.fragments;
 
-import static com.example.thriftbooks.models.Post.KEY_CREATED_AT;
+import static com.example.thriftbooks.models.MessageThread.KEY_CREATED_AT;
+import static com.example.thriftbooks.models.Post.KEY_USER;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,11 +24,13 @@ import com.bumptech.glide.Glide;
 import com.example.thriftbooks.EndlessRecyclerViewScrollListener;
 import com.example.thriftbooks.ProfileAdapter;
 import com.example.thriftbooks.R;
+import com.example.thriftbooks.activities.ChangeProfileInfoActivity;
 import com.example.thriftbooks.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +47,7 @@ public class ProfileFragment extends Fragment {
     private GridLayoutManager gridLayoutManager;
     EndlessRecyclerViewScrollListener scrollListener;
     private ImageView ivProfilePicture;
-    Post post;
+    private Button btnEditProfile;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -69,17 +74,26 @@ public class ProfileFragment extends Fragment {
         });
         gridLayoutManager = new GridLayoutManager(getContext(),3);
         tvGridUsername = view.findViewById(R.id.tvGridProfileUsername);
-//        ivProfileBookImage = view.findViewById(R.id.ivGridBookImage);
+        tvGridUsername.setText(ParseUser.getCurrentUser().getUsername().toString());
         ivProfilePicture = view.findViewById(R.id.ivProfilePicture);
-        Post post = new Post();
-        ParseFile image = post.getUser().getProfileImage();
+        ParseFile image = ParseUser.getCurrentUser().getParseFile("profilePicture");
         if (image != null) {
-            Glide.with(this).load(image.getUrl()).circleCrop().into(ivProfileBookImage);
+            Glide.with(getContext()).load(image.getUrl()).circleCrop().into(ivProfilePicture);
         }
         rvBooksProfile = view.findViewById(R.id.rvProfilePosts);
         adaptProfile = new ProfileAdapter(getContext(), profilePosts);
         rvBooksProfile.setAdapter(adaptProfile);
         rvBooksProfile.setLayoutManager(gridLayoutManager);
+        btnEditProfile = view.findViewById(R.id.btnEditProfile);
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChangeProfileInfoActivity.class);
+
+                Log.i(TAG, "Profile Fragment not working");
+                startActivity(intent);
+            }
+        });
         scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -91,7 +105,8 @@ public class ProfileFragment extends Fragment {
     }
     public void queryPosts(int i) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
+        query.include(KEY_USER);
+        query.whereEqualTo(KEY_USER,ParseUser.getCurrentUser());
         query.setLimit(25);
         query.setSkip(i);
         query.addDescendingOrder(String.valueOf(KEY_CREATED_AT));
@@ -100,8 +115,6 @@ public class ProfileFragment extends Fragment {
             public void done(List<Post> posts, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with getting posts on HomePage",e);
-                } for (Post post: posts) {
-                    Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
                 }
                 profilePosts.addAll(posts);
                 Log.i(TAG, profilePosts.toString());

@@ -1,10 +1,12 @@
 package com.example.thriftbooks.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +18,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.thriftbooks.EndlessRecyclerViewScrollListener;
 import com.example.thriftbooks.PostsAdapter;
 import com.example.thriftbooks.R;
+import com.example.thriftbooks.activities.MainActivity;
+import com.example.thriftbooks.activities.MessageThreadActivity;
 import com.example.thriftbooks.models.Post;
 import com.example.thriftbooks.models.User;
 import com.parse.FindCallback;
@@ -33,9 +37,14 @@ public class HomeFragment extends Fragment{
     EndlessRecyclerViewScrollListener scrollListener;
     private RecyclerView rvBooks;
     private SwipeRefreshLayout swipeContainer;
+    MainActivity activity;
+    ImageButton btnSendMessage;
 
     public HomeFragment() {
         // Required empty public constructor
+    }
+    public HomeFragment(MainActivity mainActivity){
+        activity = mainActivity;
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -46,14 +55,22 @@ public class HomeFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        activity.getSupportActionBar().hide();
         swipeContainer = view.findViewById(R.id.swipeContainer);
+        btnSendMessage = view.findViewById(R.id.ibMessageBtn);
+        btnSendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentMessageThread = new Intent(getContext(), MessageThreadActivity.class);
+                startActivity(intentMessageThread);
+            }
+        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -74,6 +91,7 @@ public class HomeFragment extends Fragment{
         };
         rvBooks.addOnScrollListener(scrollListener);
         queryPosts(0);
+
     }
 
     private void queryPosts(int i) {

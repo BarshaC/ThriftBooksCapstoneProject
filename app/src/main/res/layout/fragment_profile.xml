@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ProfileFragment">
 
     <LinearLayout
@@ -12,7 +13,28 @@
         android:orientation="vertical"
         android:id="@+id/relLayout1">
 
-        <include layout="@layout/profile_fragment_upper_itemview" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/logoutToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/teal_700"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="51dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <TextView
+                android:id="@+id/tvProfileFragmentTitle"
+                android:layout_marginLeft="10dp"
+                android:gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Profile"
+                android:textSize="18sp"
+                android:textColor="@color/white" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <include layout = "@layout/profile_fragment_upper_itemview"/>
 
     </LinearLayout>
 
@@ -21,7 +43,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/teal_700"
         android:layout_below="@+id/relLayout1">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

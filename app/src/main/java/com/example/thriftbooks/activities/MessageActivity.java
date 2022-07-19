@@ -35,13 +35,14 @@ public class MessageActivity extends AppCompatActivity {
     private EditText etMessage;
     private ImageButton ibSend;
     private TextView username;
-    private ImageView userImage, otherUserImage;
+    private ImageView userImage;
     private MessageAdapter mAdapter;
     private RecyclerView rvMessage;
     private ArrayList<Message> mMessages;
     static final int MAX_MESSAGES_TO_SHOW = 50;
     boolean mFirstLoad;
     private MessageThread thread;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class MessageActivity extends AppCompatActivity {
             Glide.with(this).load(image.getUrl()).into(userImage);
         }
         refreshMessages();
+
     }
     void messagePosting() {
         etMessage = (EditText) findViewById(R.id.etMessage);
@@ -82,7 +84,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String data = etMessage.getText().toString();
                 Message message = new Message();
-                message.setReceiverId(otherUserId);
+                message.setReceiver(otherUserId);
                 message.setSenderId(currentUserId);
                 message.setBody(data);
                 message.saveInBackground(new SaveCallback() {
@@ -125,5 +127,4 @@ public class MessageActivity extends AppCompatActivity {
     void startWithCurrentUser() {
         messagePosting();
     }
-
 }

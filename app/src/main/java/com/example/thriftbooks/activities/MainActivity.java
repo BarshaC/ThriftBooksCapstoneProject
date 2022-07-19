@@ -1,11 +1,8 @@
 package com.example.thriftbooks.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     final FragmentManager fragmentManager = getSupportFragmentManager();
     private BottomNavigationView bottomNavigationView;
+    HomeFragment homeFragment = new HomeFragment(this);
+    ComposeFragment composeFragment = new ComposeFragment(this);
     private FrameLayout flContainer;
 
     @Override
@@ -37,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 switch (item.getItemId()) {
                     case R.id.actionHome:
-                        fragment = new HomeFragment();
+                        fragment = homeFragment;
                         break;
                     case R.id.actionCompose:
-                        fragment = new ComposeFragment();
+                        fragment = composeFragment;
                         break;
                     case R.id.actionProfile:
                         fragment = new ProfileFragment();
@@ -59,30 +58,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        bottomNavigationView.setSelectedItemId(R.id.actionHome);
-    }
-
-
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId()) {
-            case R.id.actionMessage:
-                Intent i = new Intent(MainActivity.this, MessageThreadActivity.class);
-                startActivity(i);
-                Toast
-                        .makeText(
-                                getApplicationContext(),
-                                "See Message",
-                                Toast.LENGTH_SHORT)
-                        .show();
-                return true;
-        }
-        return (super.onOptionsItemSelected(item));
+        bottomNavigationView.setSelectedItemId(R.id.actionCompose);
     }
 }
