@@ -1,6 +1,7 @@
 package com.example.thriftbooks;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 buyer = (User) message.getSenderId().fetchIfNeeded();
 
             } catch (ParseException e){
+                Log.e(TAG, "Error: " + e);
 
             }
             ParseFile image = (ParseFile) buyer.getProfileImage();
@@ -117,9 +119,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             try {
                seller = (User) message.getReceiver().fetchIfNeeded();
 
-
             } catch (ParseException e){
-
+                Log.e(TAG, "Error: " + e);
             }
             ParseFile image = (ParseFile) seller.getProfileImage();
             if (image != null) {

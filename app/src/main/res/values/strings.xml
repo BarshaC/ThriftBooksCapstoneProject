@@ -13,6 +13,25 @@
     <string name="buyerName"> Name of Buyer </string>
     <string name="lastMessage"> Last Message from Buyer </string>
     <string name="blockMessage"> You can block this person! </string>
-
+    <string name="outgoingMessage"> Your outgoing message here </string>
+    <string name="bookTitleThread"> Title of book buyer is interested in</string>
+    <string name="signUpFN">Enter your last name</string>
+    <string name="SignUpName">Enter your first name</string>
+    <string name="bookType"> For Sale</string>
+    <string name="bookCondition">Condition of Book</string>
+    <string name="bookTitle">Title of Book</string>
+    <string name="bookAuthor">Author of Book</string>
+    <string name="signUp">Enter Last Name</string>
+    <string name="firstName">Enter Your First Name </string>
+    <string name="dateOfBirth">Date of Birth</string>
+    <string name="DOBHint">MM/DD/YYYY</string>
+    <string name="usernameFeedback">This is a required field!</string>
+    <string name="ageFeedback">Age must be 18 and older</string>
+    <string name="hintMessage">Interested in this book!</string>
+    <string name="hintEmail">Enter your email</string>
+    <string name="moreDetail">Read more </string>
+    <string name="timeStamp">time ago</string>
+    <string name="hintUsername">Enter Username</string>
+    <string name="des">Description</string>
 </resources>
 

@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="12dp"
-        android:text="time ago"
+        android:text="@string/timeStamp"
         app:layout_constraintBottom_toTopOf="@+id/tvDetailBookTitle"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -45,7 +45,7 @@
         android:layout_height="23dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="68dp"
-        android:text="barsha"
+        android:text="string/username"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/profilePicture"
@@ -71,7 +71,7 @@
         android:textStyle="normal"
         app:layout_constraintStart_toEndOf="@+id/ivPostDetailBookPhoto"
         app:layout_constraintTop_toBottomOf="@+id/tvDetailBookAuthor"
-        tools:text="Description" />
+        tools:text="@string/des" />
 
     <ImageView
         android:id="@+id/ivPostDetailBookPhoto"
@@ -89,7 +89,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:text="Title of the Book"
+        android:text="string/bookTitle"
         app:layout_constraintStart_toEndOf="@+id/ivPostDetailBookPhoto"
         app:layout_constraintTop_toTopOf="@+id/ivPostDetailBookPhoto" />
 
@@ -100,7 +100,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="116dp"
-        android:text="Author of the Book"
+        android:text="@string/bookAuthor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/ivPostDetailBookPhoto"
@@ -112,7 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:text="For Sale"
+        android:text="@string/bookType"
         app:layout_constraintStart_toEndOf="@+id/ivPostDetailBookPhoto"
         app:layout_constraintTop_toBottomOf="@+id/tvPostDescription" />
 
@@ -122,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:text="Condition of the Book"
+        android:text="@string/bookCondition"
         app:layout_constraintStart_toEndOf="@+id/ivPostDetailBookPhoto"
         app:layout_constraintTop_toBottomOf="@+id/tvDetailBookType" />
 
@@ -132,7 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
-        android:text="More About Book"
+        android:text="@string/moreDetail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDetailBookCondition" />
 

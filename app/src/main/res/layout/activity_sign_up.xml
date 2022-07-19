@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Username Feedback"
+        android:text="@string/usernameFeedback"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.148"
@@ -49,7 +49,7 @@
         android:layout_height="38dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
-        android:hint="Enter your last name"
+        android:hint="@string/signUpFN"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userFirstName2" />
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:layout_marginEnd="28dp"
-        android:text="Family/Last Name"
+        android:text="@string/signUp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameApp" />
@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="5dp"
-        android:hint="Enter your first name"
+        android:hint="@string/SignUpName"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userFirstName" />
@@ -95,7 +95,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:hint="Username"
+        android:hint="@string/hintUsername"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -156,7 +156,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="44dp"
-        android:text="First Name"
+        android:text="@string/firstName"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameApp" />
@@ -177,7 +177,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Username Feedback"
+        android:text="@string/usernameFeedback"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.381"
@@ -190,7 +190,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="Date of Birth"
+        android:text="@string/dateOfBirth"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etFirstName" />
 
@@ -201,7 +201,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="5dp"
         android:ems="10"
-        android:hint="MM/DD/YYYY"
+        android:hint="@string/DOBHint"
         android:inputType="date"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -212,7 +212,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
-        android:text="Age Feedback"
+        android:text="@string/ageFeedback"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etDateOfBirth" />
@@ -225,7 +225,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
-        android:hint="Enter your Email"
+        android:hint="@string/hintEmail"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -253,6 +253,7 @@
         android:layout_marginEnd="16dp"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="8dp" />
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

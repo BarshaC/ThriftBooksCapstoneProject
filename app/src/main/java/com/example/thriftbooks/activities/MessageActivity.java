@@ -115,7 +115,7 @@ public class MessageActivity extends AppCompatActivity {
                         rvMessage.scrollToPosition(0);
                         mFirstLoad = false;
                     } else {
-                        Log.e("message", "Error Loading Messages",  e);
+                        Log.e(TAG, "Error Loading Messages",  e);
                     }
                 }
             }
