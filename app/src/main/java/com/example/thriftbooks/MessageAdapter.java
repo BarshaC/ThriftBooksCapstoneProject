@@ -25,8 +25,8 @@ import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
     private static final String TAG = "MessageAdapter";
-    private List<Message> mMessages;
-    private Context mContext;
+    private final List<Message> mMessages;
+    private final Context mContext;
     private final User mUserId;
     private final User mReceiverId;
     private static final int MESSAGE_OUT = 1;
@@ -83,22 +83,27 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         public IncomingMessageViewHolder(View itemView) {
             super(itemView);
-            imageOther = (ImageView) itemView.findViewById(R.id.ivProfileOther);
-            body = (TextView) itemView.findViewById(R.id.tvIncomingMessage);
+            imageOther = itemView.findViewById(R.id.ivProfileOther);
+            body = itemView.findViewById(R.id.tvIncomingMessage);
         }
 
         @Override
         public void bindMessage(Message message) {
-            User buyer = (User) new User();
+            User buyer = new User();
             try {
                 buyer = (User) message.getSenderId().fetchIfNeeded();
 
-            } catch (ParseException e){
+            } catch (ParseException e) {
                 Log.e(TAG, "Error: " + e);
 
             }
-            ParseFile image = (ParseFile) buyer.getProfileImage();
-            Glide.with(mContext).load(image.getUrl()).circleCrop().into(imageOther);
+            ParseFile image = buyer.getProfileImage();
+            if (image != null) {
+                Glide.with(mContext).load(image.getUrl()).circleCrop().into(imageOther);
+            } else {
+                imageOther.setImageResource(R.drawable.ic_baseline_account_circle_24);
+            }
+
             body.setText(message.getBody());
         }
     }
@@ -109,24 +114,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         public OutgoingMessageViewHolder(View itemView) {
             super(itemView);
-            imageCurrentUser = (ImageView) itemView.findViewById(R.id.ivProfileMe);
-            body = (TextView) itemView.findViewById(R.id.tvOutGoingMessage);
+            imageCurrentUser = itemView.findViewById(R.id.ivProfileMe);
+            body = itemView.findViewById(R.id.tvOutGoingMessage);
         }
 
         @Override
         public void bindMessage(Message message) {
-            User seller = (User) new User();
+            User seller = new User();
             try {
-               seller = (User) message.getReceiver().fetchIfNeeded();
+                seller = (User) message.getReceiver().fetchIfNeeded();
 
-            } catch (ParseException e){
+            } catch (ParseException e) {
                 Log.e(TAG, "Error: " + e);
             }
-            ParseFile image = (ParseFile) seller.getProfileImage();
+            ParseFile image = seller.getProfileImage();
             if (image != null) {
                 Glide.with(mContext).load(image.getUrl()).circleCrop().into(imageCurrentUser);
             } else {
-                Glide.with(mContext).load(getProfileUrl(message.getReceiver().toString())).circleCrop().into(imageCurrentUser);
+                imageCurrentUser.setImageResource(R.drawable.ic_baseline_account_circle_24);
             }
             body.setText(message.getBody());
         }
@@ -146,6 +151,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             throw new IllegalArgumentException("Unknown view Type");
         }
     }
+
     private static String getProfileUrl(final String userId) {
         String hex = "";
         try {

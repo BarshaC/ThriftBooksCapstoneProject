@@ -11,12 +11,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.thriftbooks.activities.BookDetailsActivity;
+import com.example.thriftbooks.models.Comment;
 import com.example.thriftbooks.models.MessageThread;
 import com.example.thriftbooks.models.Post;
 import com.example.thriftbooks.models.User;
@@ -35,7 +37,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private final List<Post> posts;
     private static final String TAG = "PostsAdapter";
 
-    public PostsAdapter(Context context, List<Post> posts){
+    public PostsAdapter(Context context, List<Post> posts) {
         this.context = context;
         this.posts = posts;
     }
@@ -44,6 +46,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+        //Will use it later so when the user touch on the feed the comment box is Invisible
+//        view.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                Toast.makeText(context, "Touched outside", Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//        });
         return new ViewHolder(view);
 
     }
@@ -69,12 +79,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private final TextView tvBookType, tvMoreAboutPost;
         private final TextView tvBookCondition;
         private final ImageButton ibComment;
-        private final Button btnSend;
-        private final EditText etSendMessage;
+        private final Button btnSend, btnPostComment;
+        private final EditText etSendMessage, etCommentBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUsername = itemView.findViewById(R.id.tvUsername);
+            etCommentBox = itemView.findViewById(R.id.etCommentBox);
+            btnPostComment = itemView.findViewById(R.id.btnPostComment);
             ivImage = itemView.findViewById(R.id.ivPostClickedBook);
             tvDescription = itemView.findViewById(R.id.tvPostDescription);
             displayPicture = itemView.findViewById(R.id.profilePicture);
@@ -88,7 +100,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             btnSend = itemView.findViewById(R.id.btnInterestedInBook);
             etSendMessage = itemView.findViewById(R.id.etStartBuying);
         }
-        public void bind(Post post)  {
+
+        public void bind(Post post) {
             Date timeStamp = post.getCreatedAt();
             String time = Post.calculateTimeAgo(timeStamp);
             timeAgo.setText(time + " ago");
@@ -96,7 +109,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvBookTitle.setText("Title: " + post.getBookTitle());
             tvBookAuthor.setText("Author: " + post.getBookAuthor());
             tvDescription.setText("Description: " + post.getDescription());
-            tvBookCondition.setText("Condition: "+ post.getBookCondition());
+            tvBookCondition.setText("Condition: " + post.getBookCondition());
             tvBookType.setText("For: " + post.getBookType());
             btnSend.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,18 +120,19 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         MessageThread newMessageThread = new MessageThread();
                         newMessageThread.setSellerId(post.getUser());
                         newMessageThread.setBuyerId((User) ParseUser.getCurrentUser());
-                        newMessageThread.setMessageStarter(message);
+                        //newMessageThread.setLatestMessage(message);
                         newMessageThread.setPostId(post);
                         newMessageThread.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
                                 if (e != null) {
-                                    Log.d(TAG, "Issue with sending messages" + e.toString());
-                                } for (Post post: posts) {
-                                        Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
-                                    }
-                                etSendMessage.setText("");
+                                    Log.d(TAG, "Issue with sending messages" + e);
                                 }
+                                for (Post post : posts) {
+                                    Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
+                                }
+                                etSendMessage.setText("");
+                            }
                         });
 
                     } else {
@@ -126,6 +140,40 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     }
                 }
             });
+            ibComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    etCommentBox.setVisibility(View.VISIBLE);
+                    btnPostComment.setVisibility(View.VISIBLE);
+                    btnPostComment.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String actualComment = etCommentBox.getText().toString();
+                            if (actualComment != null) {
+                                Comment comment = new Comment();
+                                comment.setCommentActual(ParseUser.getCurrentUser().getObjectId());
+                                comment.setCommentator((User) ParseUser.getCurrentUser());
+                                comment.setPostIdComment(post);
+                                comment.setCommentActual(actualComment);
+                                comment.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e != null) {
+                                            Log.d(TAG, "Issue Posting Comment" + e);
+                                        }
+                                    }
+                                });
+                            }
+                            etCommentBox.setVisibility(View.INVISIBLE);
+                            btnPostComment.setVisibility(View.INVISIBLE);
+                            Toast.makeText(ibComment.getContext(), "Comment Posted!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    etCommentBox.setText(null);
+
+                }
+            });
+
 
             ParseFile profileImage = post.getUser().getProfileImage();
             if (profileImage != null) {
@@ -153,11 +201,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         }
     }
+
     public void clear() {
         posts.clear();
         notifyDataSetChanged();
     }
-    public void addAll(List<Post> list){
+
+    public void addAll(List<Post> list) {
         posts.addAll(list);
         notifyDataSetChanged();
     }

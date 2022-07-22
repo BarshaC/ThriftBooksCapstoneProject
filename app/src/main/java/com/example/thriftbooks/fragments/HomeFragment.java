@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,7 +22,6 @@ import com.example.thriftbooks.R;
 import com.example.thriftbooks.activities.MainActivity;
 import com.example.thriftbooks.activities.MessageThreadActivity;
 import com.example.thriftbooks.models.Post;
-import com.example.thriftbooks.models.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -30,7 +30,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment {
     private static final String TAG = "PostsFragment";
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
@@ -43,7 +43,8 @@ public class HomeFragment extends Fragment{
     public HomeFragment() {
         // Required empty public constructor
     }
-    public HomeFragment(MainActivity mainActivity){
+
+    public HomeFragment(MainActivity mainActivity) {
         activity = mainActivity;
     }
 
@@ -75,12 +76,12 @@ public class HomeFragment extends Fragment{
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-               queryPosts(0);
+                queryPosts(0);
             }
         });
         rvBooks = view.findViewById(R.id.rvBooks);
         allPosts = new ArrayList<Post>();
-        adapter = new PostsAdapter(getContext(),allPosts);
+        adapter = new PostsAdapter(getContext(), allPosts);
         rvBooks.setAdapter(adapter);
         rvBooks.setLayoutManager(linearLayoutManager);
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
@@ -96,7 +97,7 @@ public class HomeFragment extends Fragment{
 
     private void queryPosts(int i) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.whereNotEqualTo(Post.KEY_USER, (User) ParseUser.getCurrentUser());
+        query.whereNotEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
         query.include(Post.KEY_USER);
         query.setLimit(25);
         query.setSkip(i);
@@ -105,11 +106,11 @@ public class HomeFragment extends Fragment{
             @Override
             public void done(List<Post> posts, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Issue with getting posts on HomePage",e);
-                    Toast.makeText(getContext(),"Issue with getting posts!",Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Issue with getting posts on HomePage", e);
+                    Toast.makeText(getContext(), "Issue with getting posts!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                for (Post post: posts) {
+                for (Post post : posts) {
                     Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
                 }
                 allPosts.addAll(posts);

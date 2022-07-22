@@ -38,14 +38,13 @@ public class FeedActivity extends AppCompatActivity {
         });
         rvBooks = findViewById(R.id.rvBooks1);
         allPosts = new ArrayList<>();
-        //adapter = new BooksAdapter(this, allPosts);
         rvBooks.setAdapter(adapter);
         rvBooks.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
     private void queryPosts() {
-        ParseQuery<Post> query  = ParseQuery.getQuery(Post.class);
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.setLimit(25);
         query.addDescendingOrder("createdAt");
@@ -53,9 +52,10 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void done(List<Post> posts, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Issue with getting all the posts",e);
+                    Log.e(TAG, "Issue with getting all the posts", e);
                     return;
-                } for (Post post : posts) {
+                }
+                for (Post post : posts) {
                     Log.i(TAG, "Posts :" + post.getUser().getUsername());
                 }
                 allPosts.addAll(posts);

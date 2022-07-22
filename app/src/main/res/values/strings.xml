@@ -33,4 +33,10 @@
     <string name="timeStamp">time ago</string>
     <string name="hintUsername">Enter Username</string>
     <string name="des">Description</string>
+    <string name="logout">Logout</string>
+    <string name="back4app_server_url">thriftbooksapp.b4a.io</string>
+    <string name="back4app_app_id">igT6i4fRnseJqacXHfylAQuK0wsNWC4saosQ5Vwx</string>
+    <string name="back4app_client_key">IGezFO91Gjj9PY5StRJ8oDNC2aYFSa0BJ2wGrNt7</string>
+    <string name="channel_name">Messages</string>
+    <string name="channel_description">Messages on ThriftBooks</string>
 </resources>

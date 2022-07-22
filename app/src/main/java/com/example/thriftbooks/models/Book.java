@@ -18,16 +18,19 @@ public class Book extends ParseObject {
     public static final String KEY_BOOK_DESCRIPTION = "description";
     public static final String KEY_BOOK_PAGE_COUNT = "pageCount";
 
-    public Book(){};
+    public Book() {
+    }
+
     public Date getCreatedAt() {
         return getDate(KEY_BOOK_CREATED_AT);
     }
+
     public String getSearchTitle() {
         return getString(KEY_BOOK_TITLE);
     }
 
     public void setSearchTitle(String title) {
-        put(KEY_BOOK_TITLE,title);
+        put(KEY_BOOK_TITLE, title);
     }
 
     public String getSearchSubtitle() {
@@ -35,7 +38,7 @@ public class Book extends ParseObject {
     }
 
     public void setSearchSubtitle(String subtitle) {
-        put(KEY_BOOK_SUBTITLE,subtitle);
+        put(KEY_BOOK_SUBTITLE, subtitle);
     }
 
     public ArrayList<String> getSearchAuthors() {
@@ -54,7 +57,7 @@ public class Book extends ParseObject {
     }
 
     public void setSearchPublisher(String publisher) {
-        put(KEY_BOOK_PUBLISHER,publisher);
+        put(KEY_BOOK_PUBLISHER, publisher);
     }
 
     public String getPublishedDate() {
@@ -62,7 +65,7 @@ public class Book extends ParseObject {
     }
 
     public void setPublisherDate(String publishedDate) {
-        put(KEY_BOOK_DATE_PUBLISHED,publishedDate);
+        put(KEY_BOOK_DATE_PUBLISHED, publishedDate);
     }
 
     public String getAboutVolume() {
@@ -70,7 +73,7 @@ public class Book extends ParseObject {
     }
 
     public void setAboutVolume(String aboutVolume) {
-        put(KEY_BOOK_DESCRIPTION,aboutVolume);
+        put(KEY_BOOK_DESCRIPTION, aboutVolume);
     }
 
     public int getPageCount() {
@@ -78,7 +81,7 @@ public class Book extends ParseObject {
     }
 
     public void setPageCount(int pageCount) {
-        put(KEY_BOOK_PAGE_COUNT,pageCount);
+        put(KEY_BOOK_PAGE_COUNT, pageCount);
     }
 
 }

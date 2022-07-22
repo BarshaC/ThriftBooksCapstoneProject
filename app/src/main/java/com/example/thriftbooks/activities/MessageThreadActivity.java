@@ -12,7 +12,6 @@ import com.example.thriftbooks.R;
 import com.example.thriftbooks.ThreadMessageAdapter;
 import com.example.thriftbooks.models.MessageThread;
 import com.example.thriftbooks.models.Post;
-import com.example.thriftbooks.models.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -31,10 +30,11 @@ public class MessageThreadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
         setContentView(R.layout.activity_message_thread);
         rvThreads = findViewById(R.id.rvMessageThreads);
         allThreads = new ArrayList<>();
-        adapter = new ThreadMessageAdapter(this,allThreads);
+        adapter = new ThreadMessageAdapter(this, allThreads);
         rvThreads.setAdapter(adapter);
         rvThreads.setLayoutManager(new LinearLayoutManager(this));
         swipeContainer = findViewById(R.id.swipeContainerThreads);
@@ -47,20 +47,22 @@ public class MessageThreadActivity extends AppCompatActivity {
         });
         queryThreads();
     }
+
     private void queryThreads() {
         ParseQuery<MessageThread> query = ParseQuery.getQuery(MessageThread.class);
         query.include(MessageThread.KEY_THREAD_POST_ID);
         query.setLimit(25);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
-        query.whereEqualTo(MessageThread.KEY_THREAD_SELLER_ID,(User) ParseUser.getCurrentUser());
-        query.whereNotEqualTo(MessageThread.KEY_THREAD_BUYER_ID, (User) ParseUser.getCurrentUser());
+        query.whereEqualTo(MessageThread.KEY_THREAD_SELLER_ID, ParseUser.getCurrentUser());
+        query.whereNotEqualTo(MessageThread.KEY_THREAD_BUYER_ID, ParseUser.getCurrentUser());
         query.findInBackground(new FindCallback<MessageThread>() {
             @Override
             public void done(List<MessageThread> threads, ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with getting posts on HomePage", e);
-                } for (MessageThread thread: threads) {
-                    Log.i(TAG, "Posts : " + thread.getPostId() + ", " );
+                }
+                for (MessageThread thread : threads) {
+                    Log.i(TAG, "Posts : " + thread.getPostId() + ", ");
                 }
                 allThreads.clear();
                 allThreads.addAll(threads);

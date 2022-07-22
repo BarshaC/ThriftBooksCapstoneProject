@@ -27,6 +27,7 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ThreadMessageAdapter extends RecyclerView.Adapter<ThreadMessageAdapter.ViewHolder> {
     private final Context context;
     private final List<MessageThread> threads;
@@ -35,10 +36,11 @@ public class ThreadMessageAdapter extends RecyclerView.Adapter<ThreadMessageAdap
         this.context = context;
         this.threads = threads;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.thread_message_item_buyers,parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.thread_message_item_buyers, parent, false);
         return new ViewHolder(view);
     }
 
@@ -54,12 +56,13 @@ public class ThreadMessageAdapter extends RecyclerView.Adapter<ThreadMessageAdap
         return threads.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView username;
         private final TextView lastMessage;
         private final CircleImageView image;
         private final RelativeLayout relativeLayout;
         private final TextView bookName;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             relativeLayout = itemView.findViewById(R.id.rlThreadBuyerItem);
@@ -73,16 +76,14 @@ public class ThreadMessageAdapter extends RecyclerView.Adapter<ThreadMessageAdap
 
         public void bind(MessageThread thread) {
             User buyer = new User();
-            try{
+            try {
                 buyer = (User) thread.getBuyerId().fetchIfNeeded();
-            } catch(ParseException e) {
+            } catch (ParseException e) {
                 Log.e(TAG, "Error" + e);
             }
-
+            //lastMessage.setText(thread.getLatestMessage());
             username.setText(buyer.getUsername());
-            lastMessage.setText(thread.getMessageStarter());
             bookName.setText(thread.getPostId().getBookTitle());
-
             ParseFile imageBuyer = buyer.getProfileImage();
             if (imageBuyer != null) {
                 Glide.with(context).load(imageBuyer.getUrl()).into(image);
@@ -93,6 +94,7 @@ public class ThreadMessageAdapter extends RecyclerView.Adapter<ThreadMessageAdap
                     Intent i = new Intent(context, MessageActivity.class);
                     i.putExtra("messageThreadInfo", Parcels.wrap(thread));
                     context.startActivity(i);
+
 
                 }
             });

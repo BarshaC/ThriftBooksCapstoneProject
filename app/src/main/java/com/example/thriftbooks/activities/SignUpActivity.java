@@ -30,7 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText etFirstName;
     private EditText etSecondName;
     private EditText etDateOfBirth;
-    private String [] genreOption = {"Select Your Fav Genre", "Fiction", "NonFiction", "TextBook", "FolkTale", "Plays"};
+    private final String[] genreOption = {"Select Your Fav Genre", "Fiction", "NonFiction", "TextBook", "FolkTale", "Plays"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,8 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
-    public void saveUserData(String username,String password, String firstName, String lastName, String dateOfBirth, String email, String favGenre) {
+
+    public void saveUserData(String username, String password, String firstName, String lastName, String dateOfBirth, String email, String favGenre) {
         User user = new User();
         user.setUserFirstName(firstName);
         user.setUserLastName(lastName);
@@ -83,18 +84,26 @@ public class SignUpActivity extends AppCompatActivity {
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
-                if (e == null ) {
-                    Log.e(TAG,"All sign up data saved successfully!");
+                if (e == null) {
+                    Log.e(TAG, "All sign up data saved successfully!");
                     return;
                 } else {
                     ParseUser.logOut();
                     Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
-                showAlert("Successful Sign Up!", "Welcome " + firstName  +"!");
+                showAlert("Successful Sign Up!", "Welcome " + firstName + "!");
             }
         });
+        etUsername.setText(null);
+        etFirstName.setText(null);
+        etSecondName.setText(null);
+        etPassword.setText(null);
+        etEmail.setText(null);
+        etDateOfBirth.setText(null);
+        spinnerFavGenre.setAdapter(null);
     }
-    private void showAlert(String title,String message){
+
+    private void showAlert(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this)
                 .setTitle(title)
                 .setMessage(message)

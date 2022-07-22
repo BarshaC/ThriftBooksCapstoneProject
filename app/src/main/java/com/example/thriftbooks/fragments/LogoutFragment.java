@@ -14,11 +14,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.thriftbooks.R;
 import com.example.thriftbooks.activities.LoginActivity;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 
 public class LogoutFragment extends Fragment {
     private static final String TAG = "LogoutFragment";
     private ImageButton tempLogoutBtn;
+
     public LogoutFragment() {
         // Required empty public constructor
     }
@@ -30,6 +32,7 @@ public class LogoutFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_logout, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -38,6 +41,7 @@ public class LogoutFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Issue with logout");
+                ParsePush.unsubscribeInBackground(ParseUser.getCurrentUser().getObjectId());
                 ParseUser.logOut();
                 Intent i = new Intent(getContext(), LoginActivity.class);
                 startActivity(i);

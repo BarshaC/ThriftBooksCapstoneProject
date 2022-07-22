@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvPostBookAuthor"
         tools:text="Description" />
 
-    <ImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/ivPostClickedBook"
         android:layout_width="wrap_content"
         android:layout_height="175dp"
@@ -106,14 +106,14 @@
 
     <ImageButton
         android:id="@+id/ibComment"
-        android:layout_width="99dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="320dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="16dp"
         android:background="@color/white"
         android:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPostClickedBook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etStartBuying"
         app:srcCompat="@drawable/ic_baseline_message_24" />
 
     <TextView
@@ -149,7 +149,7 @@
     <EditText
         android:id="@+id/etStartBuying"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
@@ -158,6 +158,44 @@
         app:layout_constraintEnd_toStartOf="@+id/btnInterestedInBook"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivPostClickedBook" />
+
+    <TextView
+        android:id="@+id/tvNumberComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Comments"
+        app:layout_constraintStart_toEndOf="@+id/ibComment"
+        app:layout_constraintTop_toBottomOf="@+id/etStartBuying" />
+
+
+    <EditText
+        android:id="@+id/etCommentBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Comment here..."
+        android:visibility="invisible"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibComment" />
+
+    <Button
+        android:id="@+id/btnPostComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@+id/etCommentBox"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:text="Post"
+        app:layout_constraintStart_toEndOf="@+id/etCommentBox"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumberComments" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

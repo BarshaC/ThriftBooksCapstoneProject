@@ -19,15 +19,20 @@ import java.util.ArrayList;
 
 public class BookClient {
     private static final String TAG = "BookClient";
-    public static final String  baseAPI_URL = "https://www.googleapis.com/books/v1/volumes?q=";
+    public static final String baseAPI_URL = "https://www.googleapis.com/books/v1/volumes?q=";
     String api_key = BuildConfig.API_KEY;
     private RequestQueue mRequestQueue;
-    private AsyncHttpClient client;
+    private final AsyncHttpClient client;
     private RequestQueue requestQuery;
     private ArrayList<Book> queryBookArrayList;
 
-    public BookClient() {this.client = new AsyncHttpClient();}
-    private String getBaseAPI_URL(String relativeURL) {return baseAPI_URL + relativeURL; }
+    public BookClient() {
+        this.client = new AsyncHttpClient();
+    }
+
+    private String getBaseAPI_URL(String relativeURL) {
+        return baseAPI_URL + relativeURL;
+    }
 
     public ArrayList getBooks(final String query) {
         queryBookArrayList = new ArrayList<>();

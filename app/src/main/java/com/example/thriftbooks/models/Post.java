@@ -2,16 +2,12 @@ package com.example.thriftbooks.models;
 
 import android.util.Log;
 
-import com.parse.FindCallback;
 import com.parse.ParseClassName;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.Date;
-import java.util.List;
 
 
 @ParseClassName("Post")
@@ -115,15 +111,24 @@ public class Post extends ParseObject {
         put(KEY_POST_BOOK_CONDITION, bookCondition);
     }
 
-    public boolean getPostComment() {
-        ParseQuery<ParseObject> commentQuery = this.getRelation(KEY_POST_BOOK_COMMENT).getQuery();
-        commentQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> comments, ParseException e) {
-            }
-        });
-        return true;
+    public Comment getPostComment() {
+        return (Comment) getParseObject(KEY_POST_BOOK_COMMENT);
     }
+
+    public void setPostComment(Comment postComment) {
+        put(KEY_POST_BOOK_COMMENT, postComment);
+    }
+    //Might use this code later if I use relation to the comment not the pointer
+    //Using pointer for now
+//    public boolean getPostComment() {
+//        ParseQuery<ParseObject> commentQuery = this.getRelation(KEY_POST_BOOK_COMMENT).getQuery();
+//        commentQuery.findInBackground(new FindCallback<ParseObject>() {
+//            @Override
+//            public void done(List<ParseObject> comments, ParseException e) {
+//            }
+//        });
+//        return true;
+//    }
 
     public User getUser() {
         return (User) getParseUser(KEY_USER);
@@ -132,6 +137,7 @@ public class Post extends ParseObject {
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
     }
+
 
 
 }

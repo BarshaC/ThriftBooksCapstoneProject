@@ -58,6 +58,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             ivClickedBookImage = itemView.findViewById(R.id.ivGridBookImage);
 
         }
+
         public void bind(Post post) {
             ParseFile bookImage = post.getImage();
             if (bookImage != null) {

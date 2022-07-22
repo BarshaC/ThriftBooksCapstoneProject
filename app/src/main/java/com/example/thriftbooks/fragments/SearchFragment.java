@@ -55,6 +55,7 @@ public class SearchFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //setHasOptionsMenu(true);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class SearchFragment extends Fragment {
                 }
                 searchedBookArrayList = new ArrayList<>();
                 requestQuery = Volley.newRequestQueue(getActivity().getApplicationContext());
-                String googleUrl = "https://www.googleapis.com/books/v1/volumes?q=" + "intitle:"+ etSearchBook.getText().toString()+ "&key=" + api_key;
+                String googleUrl = "https://www.googleapis.com/books/v1/volumes?q=" + "intitle:" + etSearchBook.getText().toString() + "&key=" + api_key;
                 Log.i(TAG, googleUrl);
                 RequestQueue queue = Volley.newRequestQueue(getContext());
                 JsonObjectRequest requestBookObject = new JsonObjectRequest(Request.Method.GET, googleUrl, null, new Response.Listener<JSONObject>() {
@@ -97,10 +98,11 @@ public class SearchFragment extends Fragment {
                                 String bookPublisher = itemBook.optString("publisher");
                                 String bookDatePublished = itemBook.optString("publishedDate");
                                 String aboutVolume = itemBook.optString("description");
-                                int pageCount = itemBook.optInt("pageCount");JSONArray authorList = itemBook.getJSONArray("authors");
+                                int pageCount = itemBook.optInt("pageCount");
+                                JSONArray authorList = itemBook.getJSONArray("authors");
                                 ArrayList<String> authorsList = new ArrayList<>();
-                                if (authorList.length() != 0 ) {
-                                    for (int x = 0; x <authorList.length(); x++) {
+                                if (authorList.length() != 0) {
+                                    for (int x = 0; x < authorList.length(); x++) {
                                         authorsList.add(authorList.optString(i));
                                     }
                                 }
@@ -113,26 +115,26 @@ public class SearchFragment extends Fragment {
                                 book.setSearchTitle(bookTitle);
                                 book.setSearchSubtitle(bookSubtitle);
                                 book.saveInBackground(new SaveCallback() {
-                                                          @Override
-                                                          public void done(ParseException e) {
-                                                              if (e != null ) {
-                                                                  Log.i(TAG, "Exeception " + e);
-                                                              } else {
-                                                                  Log.i(TAG, "Saved !");
-                                                              }
-                                                          }
-                                                      });
-                                        searchedBookArrayList.add(book);
-                                Log.i(TAG,searchedBookArrayList.toString());
-                                BooksAdapter searchAdapter = new BooksAdapter(getContext(),searchedBookArrayList);
-                                LinearLayoutManager linearLayoutManagerSearch = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
-                                RecyclerView recyclerViewSearch = (RecyclerView) view.findViewById(R.id.idRVBooks);
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e != null) {
+                                            Log.i(TAG, "Exeception " + e);
+                                        } else {
+                                            Log.i(TAG, "Saved !");
+                                        }
+                                    }
+                                });
+                                searchedBookArrayList.add(book);
+                                Log.i(TAG, searchedBookArrayList.toString());
+                                BooksAdapter searchAdapter = new BooksAdapter(getContext(), searchedBookArrayList);
+                                LinearLayoutManager linearLayoutManagerSearch = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+                                RecyclerView recyclerViewSearch = view.findViewById(R.id.idRVBooks);
                                 recyclerViewSearch.setLayoutManager(linearLayoutManagerSearch);
                                 recyclerViewSearch.setAdapter(searchAdapter);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.d(TAG, "No data found ",e);
+                            Log.d(TAG, "No data found ", e);
                         }
                     }
                 }, new Response.ErrorListener() {

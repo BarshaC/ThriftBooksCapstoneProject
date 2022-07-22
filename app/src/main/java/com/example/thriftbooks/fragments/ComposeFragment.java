@@ -45,8 +45,8 @@ public class ComposeFragment extends Fragment {
     private File photoFile;
     private EditText etBookTitle, etBookAuthor, etDescription, etBookType;
     private Spinner spinnerCondition, spinnerType;
-    public String [] bookCondition = {"Condition of Book","Torn", "Bad Cover","Good", "Like New"};
-    public String [] bookType = {"For Sale/Borrow/Rent","Sale", "Borrow","Rent"};
+    public String[] bookCondition = {"Condition of Book", "Torn", "Bad Cover", "Good", "Like New"};
+    public String[] bookType = {"For Sale/Borrow/Rent", "Sale", "Borrow", "Rent"};
     private Book book;
     MainActivity activity;
 
@@ -54,8 +54,7 @@ public class ComposeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public ComposeFragment(MainActivity mainActivity)
-    {
+    public ComposeFragment(MainActivity mainActivity) {
         activity = mainActivity;
     }
 
@@ -80,12 +79,12 @@ public class ComposeFragment extends Fragment {
         etBookType = view.findViewById(R.id.tvPostBookType);
         //Spinner for Conditions of Books
         spinnerCondition = view.findViewById(R.id.spinnerBookCondition);
-        ArrayAdapter <String> adapter1 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item,bookCondition);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, bookCondition);
         adapter1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerCondition.setAdapter(adapter1);
         //Spinner for types of Book for example : For Sale/Borrow/Rent
         spinnerType = view.findViewById(R.id.spinnerBookType);
-        ArrayAdapter <String> adapter2 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item,bookType);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, bookType);
         adapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerType.setAdapter(adapter2);
 
@@ -106,7 +105,7 @@ public class ComposeFragment extends Fragment {
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 String valueBookCondition = spinnerCondition.getSelectedItem().toString();
                 String valueBookType = spinnerType.getSelectedItem().toString();
-                savePost(description, currentUser, bookTitle, bookAuthor,valueBookCondition, valueBookType, photoFile);
+                savePost(description, currentUser, bookTitle, bookAuthor, valueBookCondition, valueBookType, photoFile);
             }
         });
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
@@ -117,6 +116,7 @@ public class ComposeFragment extends Fragment {
             }
         });
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -174,5 +174,10 @@ public class ComposeFragment extends Fragment {
                 ivImageBook.setImageResource(0);
             }
         });
+        etDescription.setText(null);
+        etBookTitle.setText(null);
+        etBookAuthor.setText(null);
+        spinnerCondition.setAdapter(null);
+        spinnerType.setAdapter(null);
     }
 }

@@ -16,10 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thriftbooks.R;
-import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseSession;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
@@ -30,14 +29,15 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnSignUp;
     private Button btnForgotPassword;
 
-//    @Override
+    //    @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.action_bar_forgot_password, menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.actionGoBack:  {
+            case R.id.actionGoBack: {
                 return true;
             }
             default:
@@ -50,29 +50,18 @@ public class LoginActivity extends AppCompatActivity {
         context.startActivity(forgot);
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        etUsername = findViewById(R.id.etEditUsername);
-        final boolean[] isValid = new boolean[1];
         if (ParseUser.getCurrentUser() != null) {
-            if (!isValid[0]){
-                ParseSession.getCurrentSessionInBackground(new GetCallback<ParseSession>() {
-                    @Override
-                    public void done(ParseSession object, ParseException e) {
-                        isValid[0] = object.getSessionToken() != null && !object.getSessionToken().isEmpty();
-                    }
-                });
-                if(!isValid[0]){
-                    goMainActivity();
-                }
+            if (ParseUser.getCurrentUser().isAuthenticated()) {
+                goMainActivity();
+            } else {
                 ParseUser.logOut();
-                finish();
             }
         }
+        setContentView(R.layout.activity_login);
+        etUsername = findViewById(R.id.etEditUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnSignUp = findViewById(R.id.btnSignUp);
@@ -80,9 +69,9 @@ public class LoginActivity extends AppCompatActivity {
         btnForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 Toast.makeText(LoginActivity.this, "You can reset your password now!", Toast.LENGTH_SHORT).show(   );
-                 Intent i = new Intent(LoginActivity.this,ForgotCredentialActivity.class);
-                 startActivity(i);
+                Toast.makeText(LoginActivity.this, "You can reset your password now!", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(LoginActivity.this, ForgotCredentialActivity.class);
+                startActivity(i);
             }
         });
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
     private void loginUser(String username, String password) {
         Log.i(TAG, "Attempting to login user : " + username);
         ParseUser.logInInBackground(username, password, new LogInCallback() {
@@ -118,9 +108,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     private void goMainActivity() {
         Intent i = new Intent(LoginActivity.this, MainActivity.class);
+        ParsePush.subscribeInBackground(ParseUser.getCurrentUser().getObjectId());
         startActivity(i);
-        finish();
     }
 }

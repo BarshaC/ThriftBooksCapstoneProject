@@ -64,21 +64,24 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.actionHome);
     }
 
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
 
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_bar_message, menu);
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionMessage:
                 Intent i = new Intent(MainActivity.this, MessageThreadActivity.class);
                 startActivity(i);
-                Toast
-                        .makeText(
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                Toast.makeText(
                                 getApplicationContext(),
                                 "Message",
                                 Toast.LENGTH_SHORT)

@@ -13,8 +13,10 @@ public class MessageThread extends ParseObject {
     public static final String KEY_THREAD_BUYER_ID = "BuyerId";
     public static final String KEY_THREAD_SELLER_ID = "SellerId";
     public static final String KEY_MESSAGE_RECENT = "recentMessage";
+    public static final String KEY_LATEST_MESSAGE = "latestMessage";
 
-    public MessageThread() {}
+    public MessageThread() {
+    }
 
     public User getBuyerId() {
         return (User) getParseUser(KEY_THREAD_BUYER_ID);
@@ -40,8 +42,19 @@ public class MessageThread extends ParseObject {
         put(KEY_THREAD_POST_ID, postId);
     }
 
-    public String getMessageStarter() { return getString(KEY_MESSAGE_RECENT); }
+    public Message getMessageStarter() {
+        return (Message) getParseObject(KEY_MESSAGE_RECENT);
+    }
 
-    public void setMessageStarter(String messageStarter) { put(KEY_MESSAGE_RECENT, messageStarter); }
+    public void setMessageStarter(Message messageStarter) {
+        put(KEY_MESSAGE_RECENT, messageStarter);
+    }
 
+    public String getLatestMessage() {
+        return getString(KEY_LATEST_MESSAGE);
+    }
+
+    public void setLatestMessage(String messageLatest) {
+        put(KEY_LATEST_MESSAGE, messageLatest);
+    }
 }
