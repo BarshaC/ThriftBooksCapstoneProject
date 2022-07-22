@@ -38,8 +38,8 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
-        android:layout_width="413dp"
-        android:layout_height="674dp"
+        android:layout_width="417dp"
+        android:layout_height="575dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoutToolbar">

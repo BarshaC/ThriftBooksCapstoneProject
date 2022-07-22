@@ -1,4 +1,5 @@
 package com.example.thriftbooks.models;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
@@ -23,12 +24,17 @@ public class Message extends ParseObject {
     }
 
     public void setReceiver(User receiverId) {
-        put(MESSAGE_RECEIVER_POINTER_KEY, receiverId); }
+        put(MESSAGE_RECEIVER_POINTER_KEY, receiverId);
+    }
 
 
-    public MessageThread getThreadId() { return (MessageThread) getParseObject(MESSAGE_THREAD_ID_KEY); }
+    public MessageThread getThreadId() {
+        return (MessageThread) getParseObject(MESSAGE_THREAD_ID_KEY);
+    }
 
-    public void setThreadId(MessageThread threadId) { put(MESSAGE_THREAD_ID_KEY, threadId); }
+    public void setThreadId(MessageThread threadId) {
+        put(MESSAGE_THREAD_ID_KEY, threadId);
+    }
 
     public Post getPostId() {
         return (Post) getParseObject(POST_ID_KEY);

@@ -111,10 +111,10 @@ public class ChangeProfileInfoActivity extends AppCompatActivity {
         });
         ivImageProfilePic = findViewById(R.id.ivClickedProfilePic);
         ParseFile image = ParseUser.getCurrentUser().getParseFile("profilePicture");
-        if (image != null ) {
+        if (image != null) {
             Glide.with(this).load(image.getUrl()).circleCrop().into(ivImageProfilePic);
         } else {
-            Glide.with(this).load(getPhotoFileUri(ParseUser.getCurrentUser().getObjectId())).circleCrop().into(ivImageProfilePic);
+            ivImageProfilePic.setImageResource(R.drawable.ic_baseline_account_circle_24);
         }
         if (profileImageFile == null || ivImageProfilePic.getDrawable() == null) {
             Toast.makeText(getApplicationContext(), "You must add image to change profile picture", Toast.LENGTH_SHORT).show();
@@ -122,6 +122,7 @@ public class ChangeProfileInfoActivity extends AppCompatActivity {
         }
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -136,8 +137,8 @@ public class ChangeProfileInfoActivity extends AppCompatActivity {
         } else if (requestCode == SELECT_PICTURE) {
             if (resultCode == RESULT_OK) {
                 ivImageProfilePic.setImageURI(data.getData());
-                }
             }
+        }
     }
 
     private void selectPicture() {
@@ -145,7 +146,7 @@ public class ChangeProfileInfoActivity extends AppCompatActivity {
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, SELECT_PICTURE );
+        startActivityForResult(intent, SELECT_PICTURE);
         //startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_PICTURE);
 
     }
@@ -170,12 +171,18 @@ public class ChangeProfileInfoActivity extends AppCompatActivity {
         return file;
     }
 
-    public void editUserData(String username, String firstName, String lastName, File photoFile ) {
+    public void editUserData(String username, String firstName, String lastName, File photoFile) {
         User user = (User) ParseUser.getCurrentUser();
+        if (etEditUsername != null) {
+            user.setUsername(username);
+        }
+        if (etEditFirstName != null) {
+            user.setUserFirstName(firstName);
+        }
+        if (etEditSecondName != null) {
+            user.setUserLastName(lastName);
+        }
         user.setProfileImage(new ParseFile(photoFile));
-        user.setUserLastName(lastName);
-        user.setUserFirstName(firstName);
-        user.setUsername(username);
         user.saveInBackground();
     }
 

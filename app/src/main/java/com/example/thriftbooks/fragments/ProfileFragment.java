@@ -72,9 +72,9 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-        gridLayoutManager = new GridLayoutManager(getContext(),3);
+        gridLayoutManager = new GridLayoutManager(getContext(), 3);
         tvGridUsername = view.findViewById(R.id.tvGridProfileUsername);
-        tvGridUsername.setText(ParseUser.getCurrentUser().getUsername().toString());
+        tvGridUsername.setText(ParseUser.getCurrentUser().getUsername());
         ivProfilePicture = view.findViewById(R.id.ivProfilePicture);
         ParseFile image = ParseUser.getCurrentUser().getParseFile("profilePicture");
         if (image != null) {
@@ -103,18 +103,19 @@ public class ProfileFragment extends Fragment {
         rvBooksProfile.addOnScrollListener(scrollListener);
         queryPosts(0);
     }
+
     public void queryPosts(int i) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(KEY_USER);
-        query.whereEqualTo(KEY_USER,ParseUser.getCurrentUser());
+        query.whereEqualTo(KEY_USER, ParseUser.getCurrentUser());
         query.setLimit(25);
         query.setSkip(i);
-        query.addDescendingOrder(String.valueOf(KEY_CREATED_AT));
+        query.addDescendingOrder(KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Issue with getting posts on HomePage",e);
+                    Log.e(TAG, "Issue with getting posts on HomePage", e);
                 }
                 profilePosts.addAll(posts);
                 Log.i(TAG, profilePosts.toString());

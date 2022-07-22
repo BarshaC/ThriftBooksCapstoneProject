@@ -21,7 +21,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
     private final Context context;
     private final List<Book> books;
 
-    public BooksAdapter(Context context, ArrayList<Book> books){
+    public BooksAdapter(Context context, ArrayList<Book> books) {
         this.context = context;
         this.books = books;
     }
@@ -46,14 +46,13 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvDescription;
-        private TextView tvBookAuthor;
-        private TextView tvBookTitle;
-        private TextView tvPageCount;
-        private TextView tvPublisher;
-        private TextView tvPublishedDate;
-        private ImageView ivPosterImage;
-
+        private final TextView tvDescription;
+        private final TextView tvBookAuthor;
+        private final TextView tvBookTitle;
+        private final TextView tvPageCount;
+        private final TextView tvPublisher;
+        private final TextView tvPublishedDate;
+        private final ImageView ivPosterImage;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -67,13 +66,14 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
             ivPosterImage = itemView.findViewById(R.id.ivBook);
 
         }
+
         public void bind(Book book) {
             tvBookTitle.setText("Title: " + book.getSearchTitle());
             tvBookAuthor.setText("Author: " + book.getSearchAuthors());
             tvDescription.setText("Description: " + book.getAboutVolume());
             tvPublisher.setText("Publisher:" + book.getSearchPublisher());
             tvPublishedDate.setText("PublishedDate: " + book.getPublishedDate());
-            tvPageCount.setText("Page: " + String.valueOf(book.getPageCount()));
+            tvPageCount.setText("Page: " + book.getPageCount());
             tvDescription.setText("Description: " + book.getAboutVolume());
             ivPosterImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,7 +81,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
                     Intent i = new Intent(context, BookDetailsActivity.class);
                     context.startActivity(i);
                 }
-           });
+            });
         }
     }
 
@@ -89,7 +89,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder> 
         books.clear();
         notifyDataSetChanged();
     }
-    public void addAll(ArrayList<Book> list){
+
+    public void addAll(ArrayList<Book> list) {
         books.addAll(list);
         notifyDataSetChanged();
     }

@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivClickedBook"
         app:rippleColor="#9C27B0" />
 
-    <ImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/ivClickedBook"
         android:layout_width="139dp"
         android:layout_height="205dp"
