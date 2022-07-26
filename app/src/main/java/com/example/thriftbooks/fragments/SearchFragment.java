@@ -52,7 +52,6 @@ public class SearchFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayoutSearch;
 
 
-
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -88,16 +87,17 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 progressBarSearch.setVisibility(View.VISIBLE);
-                if (!etSearchBook.getText().toString().isEmpty()){
+                if (!etSearchBook.getText().toString().isEmpty()) {
                     queryPostsSearch(0);
                     progressBarSearch.setVisibility(View.GONE);
 
-                } if (etSearchBook.getText().toString().isEmpty()) {
-                    if(rGroup.callOnClick()){
+                }
+                if (etSearchBook.getText().toString().isEmpty()) {
+                    if (rGroup.callOnClick()) {
                         queryPostsSearch(0);
                         progressBarSearch.setVisibility(View.GONE);
                     }
-                } else if (etSearchBook.getText().toString().isEmpty() ){
+                } else if (etSearchBook.getText().toString().isEmpty()) {
                     etSearchBook.setError("Please enter name of book to search!");
                 }
             }
@@ -122,14 +122,12 @@ public class SearchFragment extends Fragment {
         query.setLimit(25);
         query.setSkip(i);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
-        query.addDescendingOrder(Post.KEY_POST_BOOK_PRICE);
-        RadioButton checkedRadioButton = (RadioButton)rGroup.findViewById(rGroup.getCheckedRadioButtonId());
+//        query.addDescendingOrder(Post.KEY_POST_BOOK_PRICE);
+        RadioButton checkedRadioButton = (RadioButton) rGroup.findViewById(rGroup.getCheckedRadioButtonId());
 
-        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                if (checkedId == R.id.rbNonFictionOption){
+        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.rbNonFictionOption) {
                     query.whereEqualTo(Post.KEY_POST_BOOK_GENRE, "NonFiction");
                 } else if (checkedId == R.id.rbFictionOption) {
                     query.whereEqualTo(Post.KEY_POST_BOOK_GENRE, "Fiction");
@@ -137,7 +135,7 @@ public class SearchFragment extends Fragment {
                     query.whereEqualTo(Post.KEY_POST_BOOK_GENRE, "Plays");
                 } else if (checkedId == R.id.rbFolktaleOption) {
                     query.whereEqualTo(Post.KEY_POST_BOOK_GENRE, "Folktale");
-                }else if (checkedId == R.id.rbTextBookOption) {
+                } else if (checkedId == R.id.rbTextBookOption) {
                     query.whereEqualTo(Post.KEY_POST_BOOK_GENRE, "TextBook");
                 }
             }
@@ -149,11 +147,29 @@ public class SearchFragment extends Fragment {
                 Double conditionScore = 0.0;
                 Double priceScore = 0.0;
                 Double latestUpload = 0.0;
+                Double maxPrice = 0.0;
+                Double minimum = 0.0;
+                if (posts.size() > 1){
+                   minimum = posts.get(0).getBookPrice();
+                }else{
+                    minimum = 0.0;
+                }
+                Double minPrice  = minimum;
                 Map<Post, Double> map = new HashMap<>();
                 for (Post post : posts) {
-                    conditionScore = getScaledValue(scoreCondition(post.getBookCondition()), 4.0,1.0);
-                    latestUpload = getScaledValue(timeScore(post.getCreatedAt()), timeScore(posts.get(0).getCreatedAt()),timeScore(posts.get(posts.size()-1).getCreatedAt()));
-                    priceScore = getScaledValue(post.getBookPrice(),posts.get(0).getBookPrice(),posts.get(posts.size()-1).getBookPrice());
+                    Double currentPrice = post.getBookPrice();
+                    if (currentPrice > maxPrice) {
+                        maxPrice = post.getBookPrice();
+
+                    } else if (currentPrice < minPrice) {
+                        minPrice = currentPrice;
+                    }
+                }
+
+                for (Post post : posts) {
+                    conditionScore = getScaledValue(scoreCondition(post.getBookCondition()), 4.0, 1.0);
+                    latestUpload = getScaledValue(timeScore(post.getCreatedAt()), timeScore(posts.get(0).getCreatedAt()), timeScore(posts.get(posts.size() - 1).getCreatedAt()));
+                    priceScore = getScaledValue(post.getBookPrice(), maxPrice, minPrice);
                     final Double finalScore = 0.75 * conditionScore + 0.15 * priceScore + 0.15 * latestUpload;
                     Log.i("Score: " + finalScore + "; ", post.getBookTitle());
                     map.put(post, finalScore);
@@ -175,24 +191,24 @@ public class SearchFragment extends Fragment {
 
     private Double scoreCondition(String bookCondition) {
         Double score = 0.0;
-       if (bookCondition == "Like New") {
-           score = 4.0;
-       } else if (bookCondition == "Good") {
-           score = 3.0;
-       } else if (bookCondition == "Bad Cover") {
-           score = 2.0;
-       } else if (bookCondition == "Torn") {
-           score = 1.0;
-       }
-       return score;
+        if (bookCondition == "Like New") {
+            score = 4.0;
+        } else if (bookCondition == "Good") {
+            score = 3.0;
+        } else if (bookCondition == "Bad Cover") {
+            score = 2.0;
+        } else if (bookCondition == "Torn") {
+            score = 1.0;
+        }
+        return score;
     }
 
     private Double getScaledValue(Double data, Double maxValue, Double minValue) {
         Double dataPoint;
-        if (data > minValue){
-            dataPoint = ((data - minValue)/(maxValue-minValue));
+        if (data > minValue) {
+            dataPoint = ((data - minValue) / (maxValue - minValue));
         } else {
-            dataPoint = ((minValue-data)/(maxValue-minValue));
+            dataPoint = ((minValue - data) / (maxValue - minValue));
         }
 
         return dataPoint;
