@@ -70,7 +70,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private final TextView tvBookAuthor, timeAgo;
         private final TextView tvBookTitle;
         private final TextView tvBookType, tvMoreAboutPost;
-        private final TextView tvBookCondition, tvBookGenre, tvBookPrice;
+        private final TextView tvBookCondition, tvBookGenre, tvBookPrice,tvBookPostPageCount;
         private final ImageButton ibComment;
         private final Button btnSend, btnPostComment;
         private final EditText etSendMessage, etCommentBox;
@@ -94,6 +94,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             etSendMessage = itemView.findViewById(R.id.etStartBuying);
             tvBookGenre = itemView.findViewById(R.id.tvPostBookGenre);
             tvBookPrice = itemView.findViewById(R.id.tvPostBookPrice);
+            tvBookPostPageCount = itemView.findViewById(R.id.tvBookPostPageCount);
             ConstraintLayout constraintLayout = new ConstraintLayout(context);
             constraintLayout = itemView.findViewById(R.id.CLEachPost);
             constraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +118,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvBookType.setText("For: " + post.getBookType());
             tvBookGenre.setText("Genre: " + post.getBookGenre());
             tvBookPrice.setText("Price($): " + post.getBookPrice());
+            tvBookPostPageCount.setText("Number of Pages: " + post.getBookPageCount().toString());
             tvMoreAboutPost.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

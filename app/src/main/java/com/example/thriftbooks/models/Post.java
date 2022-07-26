@@ -24,6 +24,7 @@ public class Post extends ParseObject {
     public static final String KEY_POST_BOOK_COMMENT = "postComment";
     public static final String KEY_POST_BOOK_GENRE = "bookGenre";
     public static final String KEY_POST_BOOK_PRICE = "bookPrice";
+    public static final String KEY_POST_BOOK_PAGE_COUNT = "bookPageCount";
 
 
     public Post() {
@@ -105,14 +106,14 @@ public class Post extends ParseObject {
         put(KEY_POST_BOOK_TYPE, bookType);
     }
 
-    //Use this later
-//    public String getBookPageCount() {
-//        return getString(KEY_POST_BOOK_PAGE_COUNT;
-//    }
-//
-//    public void setBookPageCount(String bookPageCount) {
-//        put(KEY_POST_BOOK_PAGE_COUNT, bookPageCount);
-//    }
+    public Integer getBookPageCount() {
+        return getInt(KEY_POST_BOOK_PAGE_COUNT);
+    }
+
+    public void setBookPageCount(Integer bookPageCount) {
+        put(KEY_POST_BOOK_PAGE_COUNT, bookPageCount);
+    }
+
 
     public String getBookCondition() {
         return getString(KEY_POST_BOOK_CONDITION);

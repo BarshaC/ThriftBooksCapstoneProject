@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
-        app:layout_constraintTop_toBottomOf="@+id/tvPostBookAuthor"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookPostPageCount"
         tools:text="Description" />
 
     <com.github.chrisbanes.photoview.PhotoView
@@ -74,7 +74,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/bookAuthor"
         app:layout_constraintEnd_toEndOf="parent"
@@ -178,7 +178,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="36dp"
         android:ems="10"
         android:hint="@string/hintMessage"
         android:inputType="textPersonName"
@@ -224,6 +224,18 @@
         android:text="Post"
         app:layout_constraintStart_toEndOf="@+id/etCommentBox"
         app:layout_constraintTop_toBottomOf="@+id/tvNumberComments" />
+
+    <TextView
+        android:id="@+id/tvBookPostPageCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/pageCount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivPostClickedBook"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostBookAuthor" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

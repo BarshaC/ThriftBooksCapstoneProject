@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                queryPosts(0);
+                queryPosts(allPosts.size());
             }
         };
         rvBooks.addOnScrollListener(scrollListener);

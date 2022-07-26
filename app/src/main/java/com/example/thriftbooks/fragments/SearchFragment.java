@@ -122,9 +122,7 @@ public class SearchFragment extends Fragment {
         query.setLimit(25);
         query.setSkip(i);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
-//        query.addDescendingOrder(Post.KEY_POST_BOOK_PRICE);
         RadioButton checkedRadioButton = (RadioButton) rGroup.findViewById(rGroup.getCheckedRadioButtonId());
-
         rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rbNonFictionOption) {
