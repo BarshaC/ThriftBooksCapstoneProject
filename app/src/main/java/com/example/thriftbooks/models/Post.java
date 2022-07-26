@@ -22,6 +22,10 @@ public class Post extends ParseObject {
     public static final String KEY_POST_BOOK_TYPE = "bookType";
     public static final String KEY_POST_BOOK_CONDITION = "bookCondition";
     public static final String KEY_POST_BOOK_COMMENT = "postComment";
+    public static final String KEY_POST_BOOK_GENRE = "bookGenre";
+    public static final String KEY_POST_BOOK_PRICE = "bookPrice";
+    public static final String KEY_POST_BOOK_PAGE_COUNT = "bookPageCount";
+
 
     public Post() {
     }
@@ -102,6 +106,15 @@ public class Post extends ParseObject {
         put(KEY_POST_BOOK_TYPE, bookType);
     }
 
+    public Integer getBookPageCount() {
+        return getInt(KEY_POST_BOOK_PAGE_COUNT);
+    }
+
+    public void setBookPageCount(Integer bookPageCount) {
+        put(KEY_POST_BOOK_PAGE_COUNT, bookPageCount);
+    }
+
+
     public String getBookCondition() {
         return getString(KEY_POST_BOOK_CONDITION);
     }
@@ -111,6 +124,25 @@ public class Post extends ParseObject {
         put(KEY_POST_BOOK_CONDITION, bookCondition);
     }
 
+
+    public String getBookGenre() {
+        return getString(KEY_POST_BOOK_GENRE);
+    }
+
+
+    public void setBookGenre(String bookGenre) {
+        put(KEY_POST_BOOK_GENRE, bookGenre);
+    }
+
+    public Double getBookPrice() {
+        return getDouble(KEY_POST_BOOK_PRICE);
+    }
+
+
+    public void setBookPrice(Double bookPrice) {
+        put(KEY_POST_BOOK_PRICE, bookPrice);
+    }
+
     public Comment getPostComment() {
         return (Comment) getParseObject(KEY_POST_BOOK_COMMENT);
     }
@@ -118,17 +150,6 @@ public class Post extends ParseObject {
     public void setPostComment(Comment postComment) {
         put(KEY_POST_BOOK_COMMENT, postComment);
     }
-    //Might use this code later if I use relation to the comment not the pointer
-    //Using pointer for now
-//    public boolean getPostComment() {
-//        ParseQuery<ParseObject> commentQuery = this.getRelation(KEY_POST_BOOK_COMMENT).getQuery();
-//        commentQuery.findInBackground(new FindCallback<ParseObject>() {
-//            @Override
-//            public void done(List<ParseObject> comments, ParseException e) {
-//            }
-//        });
-//        return true;
-//    }
 
     public User getUser() {
         return (User) getParseUser(KEY_USER);

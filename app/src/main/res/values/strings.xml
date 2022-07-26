@@ -39,4 +39,12 @@
     <string name="back4app_client_key">IGezFO91Gjj9PY5StRJ8oDNC2aYFSa0BJ2wGrNt7</string>
     <string name="channel_name">Messages</string>
     <string name="channel_description">Messages on ThriftBooks</string>
+    <string name="fiction">Fiction</string>
+    <string name="nonFiction">NonFiction</string>
+    <string name="textBook">TextBook</string>
+    <string name="plays">Plays</string>
+    <string name="folktale">FolkTale</string>
+    <string name="genre">Genre</string>
+    <string name="price"> Price($) </string>
+    <string name="pageCount">Number of Pages</string>
 </resources>

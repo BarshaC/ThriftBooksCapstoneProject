@@ -147,8 +147,6 @@ public class ChangeProfileInfoActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, SELECT_PICTURE);
-        //startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_PICTURE);
-
     }
 
     private void launchCamera() {

@@ -94,8 +94,6 @@ public class ThreadMessageAdapter extends RecyclerView.Adapter<ThreadMessageAdap
                     Intent i = new Intent(context, MessageActivity.class);
                     i.putExtra("messageThreadInfo", Parcels.wrap(thread));
                     context.startActivity(i);
-
-
                 }
             });
         }

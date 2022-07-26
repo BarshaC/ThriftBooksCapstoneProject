@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,15 +17,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvAboutVolume"
+            android:id="@+id/tvBookAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvPublisher"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="69dp"
+            android:layout_below="@id/tvBookTitle"
+            android:layout_marginTop="3dp"
             android:layout_toEndOf="@id/ivBook"
             android:padding="3dp"
-            android:text="Description"
+            android:text="@string/bookAuthor"
             android:textColor="@color/black"
             android:textSize="11sp" />
 
@@ -51,28 +49,14 @@
             android:textSize="11sp" />
 
         <TextView
-            android:id="@+id/tvBookAuthor"
+            android:id="@+id/tvAboutVolume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvAboutVolume"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tvPublisher"
+            android:layout_marginTop="3dp"
             android:layout_toEndOf="@id/ivBook"
             android:padding="3dp"
-            android:text="Book Author"
-            android:textColor="@color/black"
-            android:textSize="11sp" />
-
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvPublishedDate"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="56dp"
-            android:padding="3dp"
-            android:text="date"
+            android:text="@string/des"
             android:textColor="@color/black"
             android:textSize="11sp" />
 
@@ -80,7 +64,7 @@
             android:id="@+id/tvPublisher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvBookTitle"
+            android:layout_below="@id/tvPageCount"
             android:layout_marginTop="3dp"
             android:layout_toEndOf="@id/ivBook"
             android:padding="3dp"
@@ -92,7 +76,7 @@
             android:id="@+id/tvPageCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvPublisher"
+            android:layout_below="@id/tvBookAuthor"
             android:layout_marginTop="3dp"
             android:layout_toEndOf="@id/ivBook"
             android:padding="3dp"
@@ -101,17 +85,41 @@
             android:textSize="11sp" />
 
         <TextView
+            android:id="@+id/tvGenre"
+            android:layout_width="128dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvAboutVolume"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="3dp"
+            android:backgroundTint="@color/teal_700"
+            android:textSize="11sp"
+            android:layout_toStartOf="@+id/tvPublishedDate"
+            android:layout_toEndOf="@id/ivBook"
+            android:textColor="@color/black"
+            android:text="@string/genre" />
+
+        <TextView
             android:id="@+id/tvPublishedDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvPageCount"
+            android:layout_below="@id/tvAboutVolume"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="3dp"
             android:layout_marginEnd="56dp"
             android:padding="3dp"
             android:text="date"
             android:textColor="@color/black"
             android:textSize="11sp" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/tvPublishedDate"
+            android:background="?android:attr/listDivider"
+            android:backgroundTint="@color/teal_700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </RelativeLayout>
 

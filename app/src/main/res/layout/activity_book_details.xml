@@ -169,5 +169,16 @@
         app:layout_constraintStart_toEndOf="@+id/comments"
         app:layout_constraintTop_toBottomOf="@+id/comments" />
 
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@+id/tvDetailBookType"
+        app:layout_constraintTop_toBottomOf="@+id/tvPostDescription" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
