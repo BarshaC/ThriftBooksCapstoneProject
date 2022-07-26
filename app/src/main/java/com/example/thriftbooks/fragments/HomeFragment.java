@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                queryPosts(allPosts.size());
+                queryPosts(0);
             }
         };
         rvBooks.addOnScrollListener(scrollListener);
@@ -113,6 +113,7 @@ public class HomeFragment extends Fragment {
                 for (Post post : posts) {
                     Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
                 }
+                allPosts.clear();
                 allPosts.addAll(posts);
                 swipeContainer.setRefreshing(false);
                 adapter.notifyDataSetChanged();

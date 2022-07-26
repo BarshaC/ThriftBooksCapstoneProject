@@ -1,51 +1,56 @@
 package com.example.thriftbooks.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.thriftbooks.BookClient;
-import com.example.thriftbooks.BooksAdapter;
-import com.example.thriftbooks.BuildConfig;
+import com.example.thriftbooks.EndlessRecyclerViewScrollListener;
 import com.example.thriftbooks.R;
+import com.example.thriftbooks.SearchAdapter;
 import com.example.thriftbooks.models.Book;
+import com.example.thriftbooks.models.Post;
+import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.SaveCallback;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SearchFragment extends Fragment {
-    private static final String TAG = "SearchActivity";
+    private static final String TAG = "SearchFragment";
     private ArrayList<Book> searchedBookArrayList;
     private ProgressBar progressBarSearch;
     private RecyclerView searchRV;
     private ImageButton ibSearch;
     private EditText etSearchBook;
-    private RequestQueue requestQuery;
-    private BookClient client;
-    String api_key = BuildConfig.API_KEY;
+    private EndlessRecyclerViewScrollListener scrollListener;
+    protected SearchAdapter searchAdapter;
+    protected List<Post> allPostsSearch;
+    private RecyclerView rvBooksSearch;
+    RadioGroup rGroup;
+    private SwipeRefreshLayout swipeRefreshLayoutSearch;
+
+
 
     public SearchFragment() {
         // Required empty public constructor
@@ -53,7 +58,6 @@ public class SearchFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setHasOptionsMenu(true);
     }
 
     @Override
@@ -68,86 +72,129 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         etSearchBook = view.findViewById(R.id.etSearchBooks);
         ibSearch = view.findViewById(R.id.ibSearch);
+        rvBooksSearch = view.findViewById(R.id.rvSearchBooks);
         progressBarSearch = view.findViewById(R.id.pbSearch);
+        swipeRefreshLayoutSearch = view.findViewById(R.id.swipeContainerSearch);
+        rGroup = (RadioGroup) view.findViewById(R.id.radioGroupSearch);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        swipeRefreshLayoutSearch.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryPostsSearch(0);
+            }
+        });
         ibSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBarSearch.setVisibility(View.VISIBLE);
-                if (etSearchBook.getText().toString().isEmpty()) {
-                    etSearchBook.setError("Please enter name of book to search!");
-                    return;
-                }
-                searchedBookArrayList = new ArrayList<>();
-                requestQuery = Volley.newRequestQueue(getActivity().getApplicationContext());
-                String googleUrl = "https://www.googleapis.com/books/v1/volumes?q=" + "intitle:" + etSearchBook.getText().toString() + "&key=" + api_key;
-                Log.i(TAG, googleUrl);
-                RequestQueue queue = Volley.newRequestQueue(getContext());
-                JsonObjectRequest requestBookObject = new JsonObjectRequest(Request.Method.GET, googleUrl, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
+                if (!etSearchBook.getText().toString().isEmpty()){
+                    queryPostsSearch(0);
+                    progressBarSearch.setVisibility(View.GONE);
+
+                } if (etSearchBook.getText().toString().isEmpty()) {
+                    if(rGroup.callOnClick()){
+                        queryPostsSearch(0);
                         progressBarSearch.setVisibility(View.GONE);
-                        try {
-                            JSONArray itemBooks = response.getJSONArray("items");
-                            Log.d(TAG, "Checking for bookitems");
-                            for (int i = 0; i < itemBooks.length(); i++) {
-                                Book book = new Book();
-                                JSONObject itemObject = itemBooks.getJSONObject(i);
-                                JSONObject itemBook = itemObject.getJSONObject("volumeInfo");
-                                String bookTitle = itemBook.optString("title");
-                                String bookSubtitle = itemBook.optString("subtitle");
-                                String bookPublisher = itemBook.optString("publisher");
-                                String bookDatePublished = itemBook.optString("publishedDate");
-                                String aboutVolume = itemBook.optString("description");
-                                int pageCount = itemBook.optInt("pageCount");
-                                JSONArray authorList = itemBook.getJSONArray("authors");
-                                ArrayList<String> authorsList = new ArrayList<>();
-                                if (authorList.length() != 0) {
-                                    for (int x = 0; x < authorList.length(); x++) {
-                                        authorsList.add(authorList.optString(i));
-                                    }
-                                }
-                                Log.i(TAG, "onResponse: ");
-                                book.setAboutVolume(aboutVolume);
-                                book.setPageCount(pageCount);
-                                book.setSearchAuthors(authorsList);
-                                book.setSearchPublisher(bookPublisher);
-                                book.setPublisherDate(bookDatePublished);
-                                book.setSearchTitle(bookTitle);
-                                book.setSearchSubtitle(bookSubtitle);
-                                book.saveInBackground(new SaveCallback() {
-                                    @Override
-                                    public void done(ParseException e) {
-                                        if (e != null) {
-                                            Log.i(TAG, "Exeception " + e);
-                                        } else {
-                                            Log.i(TAG, "Saved !");
-                                        }
-                                    }
-                                });
-                                searchedBookArrayList.add(book);
-                                Log.i(TAG, searchedBookArrayList.toString());
-                                BooksAdapter searchAdapter = new BooksAdapter(getContext(), searchedBookArrayList);
-                                LinearLayoutManager linearLayoutManagerSearch = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-                                RecyclerView recyclerViewSearch = view.findViewById(R.id.idRVBooks);
-                                recyclerViewSearch.setLayoutManager(linearLayoutManagerSearch);
-                                recyclerViewSearch.setAdapter(searchAdapter);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.d(TAG, "No data found ", e);
-                        }
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Error is found" + error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                queue.add(requestBookObject);
-
+                } else if (etSearchBook.getText().toString().isEmpty() ){
+                    etSearchBook.setError("Please enter name of book to search!");
+                }
             }
-
         });
+        allPostsSearch = new ArrayList<>();
+        searchAdapter = new SearchAdapter(getContext(), allPostsSearch);
+        rvBooksSearch.setAdapter(searchAdapter);
+        rvBooksSearch.setLayoutManager(linearLayoutManager);
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                queryPostsSearch(allPostsSearch.size());
+            }
+        };
+        rvBooksSearch.addOnScrollListener(scrollListener);
+    }
+
+    private void queryPostsSearch(int i) {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.whereNotEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.whereContains(Post.KEY_POST_BOOK_TITLE, etSearchBook.getText().toString());
+        query.setLimit(25);
+        query.setSkip(i);
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.addDescendingOrder(Post.KEY_POST_BOOK_PRICE);
+        RadioButton checkedRadioButton = (RadioButton)rGroup.findViewById(rGroup.getCheckedRadioButtonId());
+
+        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                if (checkedId == R.id.rbNonFictionOption){
+                    query.whereEqualTo(Post.KEY_POST_BOOK_GENRE, "NonFiction");
+                } else if (checkedId == R.id.rbFictionOption) {
+                    query.whereEqualTo(Post.KEY_POST_BOOK_GENRE, "Fiction");
+                } else if (checkedId == R.id.rbPlaysOption) {
+                    query.whereEqualTo(Post.KEY_POST_BOOK_GENRE, "Plays");
+                } else if (checkedId == R.id.rbFolktaleOption) {
+                    query.whereEqualTo(Post.KEY_POST_BOOK_GENRE, "Folktale");
+                }else if (checkedId == R.id.rbTextBookOption) {
+                    query.whereEqualTo(Post.KEY_POST_BOOK_GENRE, "TextBook");
+                }
+            }
+        });
+        query.findInBackground(new FindCallback<Post>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                Double conditionScore = 0.0;
+                Double priceScore = 0.0;
+                Double latestUpload = 0.0;
+                Map<Post, Double> map = new HashMap<>();
+                for (Post post : posts) {
+                    conditionScore = getScaledValue(scoreCondition(post.getBookCondition()), 4.0,1.0);
+                    latestUpload = getScaledValue(timeScore(post.getCreatedAt()), timeScore(posts.get(0).getCreatedAt()),timeScore(posts.get(posts.size()-1).getCreatedAt()));
+                    priceScore = getScaledValue(post.getBookPrice(),posts.get(0).getBookPrice(),posts.get(posts.size()-1).getBookPrice());
+                    final Double finalScore = 0.75 * conditionScore + 0.15 * priceScore + 0.15 * latestUpload;
+                    map.put(post, finalScore);
+                }
+                map.entrySet().stream().sorted(Map.Entry.comparingByValue());
+                List<Post> result = map.keySet().stream().collect(Collectors.toList());
+                allPostsSearch.clear();
+                allPostsSearch.addAll(result);
+                swipeRefreshLayoutSearch.setRefreshing(false);
+                searchAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private Double timeScore(Date createdAt) {
+        double time = createdAt.getTime();
+        return time;
 
     }
+
+    private Double scoreCondition(String bookCondition) {
+        Double score = 0.0;
+       if (bookCondition == "Like New") {
+           score = 4.0;
+       } else if (bookCondition == "Good") {
+           score = 3.0;
+       } else if (bookCondition == "Bad Cover") {
+           score = 2.0;
+       } else if (bookCondition == "Torn") {
+           score = 1.0;
+       }
+       return score;
+    }
+
+    private Double getScaledValue(Double data, Double maxValue, Double minValue) {
+        Double data_point;
+        if (data > minValue){
+            data_point = ((data - minValue)/(maxValue-minValue));
+        } else {
+            data_point = ((minValue-data)/(maxValue-minValue));
+        }
+
+        return data_point;
+    }
+
 }

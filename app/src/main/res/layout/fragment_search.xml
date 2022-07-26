@@ -3,45 +3,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.SearchFragment">
-    <LinearLayout
-        android:id="@+id/LLsearch"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/LLSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="5">
+        android:weightSum="5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <EditText
             android:id="@+id/etSearchBooks"
-            android:layout_width="0dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4" />
+            android:layout_weight="4"
+            android:importantForAutofill="auto"
+            android:autofillHints="" />
 
         <ImageButton
             android:id="@+id/ibSearch"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_alignParentEnd="true"
             android:src="@drawable/ic_baseline_search_24" />
+        <RadioGroup
+            android:id="@+id/radioGroupSearch"
+            android:layout_below="@id/etSearchBooks"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <RadioButton
+                android:id="@+id/rbNonFictionOption"
+                android:layout_width="wrap_content"
+                android:textSize="12dp"
+                android:layout_height="wrap_content"
+                android:text="@string/nonFiction" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/idRVBooks"
+            <RadioButton
+                android:id="@+id/rbFictionOption"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fiction" />
+
+            <RadioButton
+                android:id="@+id/rbTextBookOption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textBook" />
+
+            <RadioButton
+                android:id="@+id/rbPlaysOption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plays" />
+
+            <RadioButton
+                android:id="@+id/rbFolktaleOption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/folktale" />
+
+            <ProgressBar
+                android:id="@+id/pbSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="gone" />
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainerSearch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/LLsearch"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LLsearch" />
-
-    <ProgressBar
-        android:id="@+id/pbSearch"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:layout_marginTop="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/LLSearch">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSearchBooks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:padding="8dp" />
+
+        //Just keeping it for reference
+        //This code is for layout when user gets book info from API directly
+
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/idRVBooks"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_below="@id/LLsearch"-->
+        <!--            android:layout_marginTop="44dp"-->
+        <!--            android:layout_marginEnd="4dp" />-->
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

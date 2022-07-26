@@ -44,9 +44,11 @@ public class ComposeFragment extends Fragment {
     private ImageView ivImageBook;
     private File photoFile;
     private EditText etBookTitle, etBookAuthor, etDescription, etBookType;
-    private Spinner spinnerCondition, spinnerType;
+    private Spinner spinnerCondition, spinnerType,spinnerGenre;
     public String[] bookCondition = {"Condition of Book", "Torn", "Bad Cover", "Good", "Like New"};
     public String[] bookType = {"For Sale/Borrow/Rent", "Sale", "Borrow", "Rent"};
+    public String[] genreOption = {"Select Genre", "Fiction", "NonFiction", "TextBook", "FolkTale", "Plays"};
+
     private Book book;
     MainActivity activity;
 
@@ -87,6 +89,10 @@ public class ComposeFragment extends Fragment {
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, bookType);
         adapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerType.setAdapter(adapter2);
+        spinnerGenre = view.findViewById(R.id.spinnerBookGenre);
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, genreOption);
+        adapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerGenre.setAdapter(adapter3);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +111,8 @@ public class ComposeFragment extends Fragment {
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 String valueBookCondition = spinnerCondition.getSelectedItem().toString();
                 String valueBookType = spinnerType.getSelectedItem().toString();
-                savePost(description, currentUser, bookTitle, bookAuthor, valueBookCondition, valueBookType, photoFile);
+                String valueBookGenre = spinnerGenre.getSelectedItem().toString();
+                savePost(description, currentUser, bookTitle, bookAuthor, valueBookCondition, valueBookType, valueBookGenre, photoFile);
             }
         });
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
@@ -154,7 +161,7 @@ public class ComposeFragment extends Fragment {
         return file;
     }
 
-    private void savePost(String description, ParseUser currentUser, String bookTitle, String bookAuthor, String bookCondition, String bookType, File photoFile) {
+    private void savePost(String description, ParseUser currentUser, String bookTitle, String bookAuthor, String bookCondition, String bookType, String bookGenre, File photoFile) {
         Post post = new Post();
         post.setDescription(description);
         post.setBookTitle(bookTitle);
@@ -162,6 +169,7 @@ public class ComposeFragment extends Fragment {
         post.setImage(new ParseFile(photoFile));
         post.setBookType(bookType);
         post.setBookCondition(bookCondition);
+        post.setBookGenre(bookGenre);
         post.setUser(currentUser);
         post.saveInBackground(new SaveCallback() {
             @Override
@@ -177,7 +185,6 @@ public class ComposeFragment extends Fragment {
         etDescription.setText(null);
         etBookTitle.setText(null);
         etBookAuthor.setText(null);
-        spinnerCondition.setAdapter(null);
         spinnerType.setAdapter(null);
     }
 }

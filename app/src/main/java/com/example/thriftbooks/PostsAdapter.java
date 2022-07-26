@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -77,7 +78,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private final TextView tvBookAuthor, timeAgo;
         private final TextView tvBookTitle;
         private final TextView tvBookType, tvMoreAboutPost;
-        private final TextView tvBookCondition;
+        private final TextView tvBookCondition, tvBookGenre, tvBookPrice;
         private final ImageButton ibComment;
         private final Button btnSend, btnPostComment;
         private final EditText etSendMessage, etCommentBox;
@@ -99,6 +100,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvMoreAboutPost = itemView.findViewById(R.id.tvMoreDetail);
             btnSend = itemView.findViewById(R.id.btnInterestedInBook);
             etSendMessage = itemView.findViewById(R.id.etStartBuying);
+            tvBookGenre = itemView.findViewById(R.id.tvPostBookGenre);
+            tvBookPrice = itemView.findViewById(R.id.tvPostBookPrice);
+            ConstraintLayout constraintLayout = new ConstraintLayout(context);
+            constraintLayout = itemView.findViewById(R.id.CLEachPost);
+            constraintLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    etCommentBox.setVisibility(View.GONE);
+                    btnPostComment.setVisibility(View.GONE);
+                }
+            });
         }
 
         public void bind(Post post) {
@@ -111,6 +123,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription.setText("Description: " + post.getDescription());
             tvBookCondition.setText("Condition: " + post.getBookCondition());
             tvBookType.setText("For: " + post.getBookType());
+            tvBookGenre.setText("Genre: " + post.getBookGenre());
+            tvBookPrice.setText("Price($): " + post.getBookPrice());
+            tvMoreAboutPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentMoreDetail = new Intent(context,BookDetailsActivity.class);
+                    context.startActivity(intentMoreDetail);
+                }
+            });
             btnSend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

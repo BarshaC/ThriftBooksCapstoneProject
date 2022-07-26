@@ -52,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             }
         });
-        spinnerFavGenre = findViewById(R.id.spinnerGenre);
+        spinnerFavGenre = findViewById(R.id.spinnerFavGenre);
         ArrayAdapter<String> adapterSignUp = new ArrayAdapter<String>(SignUpActivity.this, android.R.layout.simple_spinner_item, genreOption);
         adapterSignUp.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerFavGenre.setAdapter(adapterSignUp);

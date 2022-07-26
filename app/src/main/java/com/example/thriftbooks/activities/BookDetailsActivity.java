@@ -32,7 +32,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     private TextView username;
     private ImageView displayPicture;
     private ImageView ivImage;
-    private TextView bookTitle, bookAuthor, bookType, bookCondition, timestamp;
+    private TextView bookTitle, bookAuthor, bookType, bookCondition, timestamp, bookPrice;
     private List<Comment> allComments;
     private RecyclerView recyclerViewComment;
     private SwipeRefreshLayout swipeRefreshLayoutComments;
@@ -51,12 +51,14 @@ public class BookDetailsActivity extends AppCompatActivity {
         bookAuthor = findViewById(R.id.tvDetailBookAuthor);
         bookCondition = findViewById(R.id.tvDetailBookCondition);
         bookType = findViewById(R.id.tvDetailBookType);
+        bookPrice = findViewById(R.id.tvPrice);
         timestamp = findViewById(R.id.timeAgo);
-        bookTitle.setText(post.getBookTitle());
-        bookAuthor.setText(post.getBookAuthor());
-        bookType.setText(post.getBookType());
+        bookTitle.setText("Title:" + post.getBookTitle());
+        bookAuthor.setText("Author: " + post.getBookAuthor());
+        bookType.setText("For " + post.getBookType());
+        bookPrice.setText("Price($):" + post.getBookPrice().toString());
         tvShowNoComments = findViewById(R.id.tvShowNoComments);
-        bookCondition.setText(post.getBookCondition());
+        bookCondition.setText("Condition: " + post.getBookCondition());
         Date timeStamp = post.getCreatedAt();
         String time = Post.calculateTimeAgo(timeStamp);
         timestamp.setText(time + " ago");
