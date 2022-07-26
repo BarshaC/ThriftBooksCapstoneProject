@@ -47,14 +47,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
-        //Will use it later so when the user touch on the feed the comment box is Invisible
-//        view.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                Toast.makeText(context, "Touched outside", Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//        });
         return new ViewHolder(view);
 
     }
@@ -141,7 +133,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         MessageThread newMessageThread = new MessageThread();
                         newMessageThread.setSellerId(post.getUser());
                         newMessageThread.setBuyerId((User) ParseUser.getCurrentUser());
-                        //newMessageThread.setLatestMessage(message);
                         newMessageThread.setPostId(post);
                         newMessageThread.saveInBackground(new SaveCallback() {
                             @Override

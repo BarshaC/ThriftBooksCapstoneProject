@@ -111,7 +111,8 @@ public class HomeFragment extends Fragment {
                     return;
                 }
                 for (Post post : posts) {
-                    Log.i(TAG, "Posts : " + post.getDescription() + ", " + post.getUser().getUsername());
+                    Log.i(TAG, "Posts : Final: " + post.getBookCondition());
+
                 }
                 allPosts.clear();
                 allPosts.addAll(posts);
@@ -120,5 +121,4 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
 }

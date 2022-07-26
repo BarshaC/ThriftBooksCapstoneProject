@@ -2,6 +2,7 @@ package com.example.thriftbooks.fragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -154,11 +155,11 @@ public class SearchFragment extends Fragment {
                     latestUpload = getScaledValue(timeScore(post.getCreatedAt()), timeScore(posts.get(0).getCreatedAt()),timeScore(posts.get(posts.size()-1).getCreatedAt()));
                     priceScore = getScaledValue(post.getBookPrice(),posts.get(0).getBookPrice(),posts.get(posts.size()-1).getBookPrice());
                     final Double finalScore = 0.75 * conditionScore + 0.15 * priceScore + 0.15 * latestUpload;
+                    Log.i("Score: " + finalScore + "; ", post.getBookTitle());
                     map.put(post, finalScore);
                 }
                 map.entrySet().stream().sorted(Map.Entry.comparingByValue());
                 List<Post> result = map.keySet().stream().collect(Collectors.toList());
-                allPostsSearch.clear();
                 allPostsSearch.addAll(result);
                 swipeRefreshLayoutSearch.setRefreshing(false);
                 searchAdapter.notifyDataSetChanged();
@@ -187,14 +188,14 @@ public class SearchFragment extends Fragment {
     }
 
     private Double getScaledValue(Double data, Double maxValue, Double minValue) {
-        Double data_point;
+        Double dataPoint;
         if (data > minValue){
-            data_point = ((data - minValue)/(maxValue-minValue));
+            dataPoint = ((data - minValue)/(maxValue-minValue));
         } else {
-            data_point = ((minValue-data)/(maxValue-minValue));
+            dataPoint = ((minValue-data)/(maxValue-minValue));
         }
 
-        return data_point;
+        return dataPoint;
     }
 
 }
