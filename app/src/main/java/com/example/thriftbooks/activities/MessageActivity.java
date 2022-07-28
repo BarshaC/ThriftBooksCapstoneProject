@@ -52,12 +52,21 @@ public class MessageActivity extends AppCompatActivity {
     private MessageThread thread;
     private List<ParseQuery<Message>> allQueries;
     private NotificationManagerCompat notificationManagerCompat;
+    private User otherUser;
+    private User currentUser;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+        thread = Parcels.unwrap(getIntent().getParcelableExtra("messageThreadInfo"));
+        currentUser = (User) ParseUser.getCurrentUser();
+        if (thread.getBuyerId().getObjectId().equals(currentUser)){
+            otherUser = thread.getSellerId();
+        } else{
+            otherUser = thread.getBuyerId();
+        }
         if (ParseUser.getCurrentUser() != null) {
             startWithCurrentUser();
         }
@@ -82,29 +91,34 @@ public class MessageActivity extends AppCompatActivity {
         SubscriptionHandling<Message> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
 
         // Listen for CREATE events on the Message class
-        subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, object) -> {
-            mMessages.add(0, object);
+        subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, message) -> {
 
-            // RecyclerView updates need to be run on the UI thread
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.notifyDataSetChanged();
-                    rvMessage.scrollToPosition(0);
-                }
-            });
+            Message newMessage = (Message) message;
+            User sender = null;
+            User receiver = null;
+            try {
+                sender = (User) newMessage.getSenderId().fetchIfNeeded();
+                receiver = (User) newMessage.getReceiver().fetchIfNeeded();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+//
+            if (sender.getObjectId().equals(otherUser.getObjectId()) && (receiver.getObjectId().equals(currentUser.getObjectId()))) {
+                mMessages.add(0, newMessage);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyItemInserted(0);
+                        rvMessage.smoothScrollToPosition(0);
+                    }
+                });
+            }
+
         });
         notificationManagerCompat = NotificationManagerCompat.from(this);
-
-    }
-
-
-    void messagePosting() {
-        etMessage = findViewById(R.id.etMessage);
         rvMessage = findViewById(R.id.rvChat);
         username = findViewById(R.id.tvOtherUsername);
         mMessages = new ArrayList<>();
-        thread = Parcels.unwrap(getIntent().getParcelableExtra("messageThreadInfo"));
         final User currentUserId = thread.getSellerId();
         final User otherUserId = thread.getBuyerId();
         mAdapter = new MessageAdapter(MessageActivity.this, currentUserId, otherUserId, mMessages);
@@ -114,22 +128,33 @@ public class MessageActivity extends AppCompatActivity {
         String usernameBuyer = thread.getBuyerId().getUsername();
         username.setText(usernameBuyer);
         rvMessage.setLayoutManager(linearLayoutManager);
+
+
+    }
+
+
+    void messagePosting() {
+        etMessage = findViewById(R.id.etMessage);
+
         ibSend = findViewById(R.id.ibSend);
+
         ibSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String data = etMessage.getText().toString();
                 Message message = new Message();
-                message.setReceiver(otherUserId);
-                message.setSenderId(currentUserId);
+                message.setReceiver(otherUser);
+                message.setSenderId(currentUser);
                 message.setBody(data);
                 message.setThreadId(thread);
+                mMessages.add(0, message);
+                mAdapter.notifyItemInserted(0);
+                rvMessage.smoothScrollToPosition(0);
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        mMessages.clear();
-                        mMessages.add(0, message);
-                        mAdapter.notifyDataSetChanged();
+//                        mMessages.clear();
+
                     }
                 });
                 etMessage.setText(null);
@@ -141,7 +166,7 @@ public class MessageActivity extends AppCompatActivity {
                 ParsePush push = new ParsePush();
                 push.setQuery(pushQuery);
                 push.setMessage(data);
-                push.setChannel(otherUserId.getObjectId());
+                push.setChannel(otherUser.getObjectId());
                 push.sendInBackground();
 
             }
@@ -150,12 +175,12 @@ public class MessageActivity extends AppCompatActivity {
 
     void refreshMessages() {
         ParseQuery<Message> query1 = ParseQuery.getQuery(Message.class);
-        query1.whereContains(Message.MESSAGE_SENDER_ID_KEY, ParseUser.getCurrentUser().getObjectId());
-        query1.whereContains(Message.MESSAGE_RECEIVER_POINTER_KEY, thread.getBuyerId().getObjectId());
+        query1.whereEqualTo(Message.MESSAGE_SENDER_ID_KEY, currentUser);
+        query1.whereEqualTo(Message.MESSAGE_RECEIVER_POINTER_KEY, otherUser);
 
         ParseQuery<Message> query2 = ParseQuery.getQuery(Message.class);
-        query2.whereContains(Message.MESSAGE_SENDER_ID_KEY, thread.getBuyerId().getObjectId());
-        query2.whereContains(Message.MESSAGE_RECEIVER_POINTER_KEY, ParseUser.getCurrentUser().getObjectId());
+        query2.whereEqualTo(Message.MESSAGE_SENDER_ID_KEY, otherUser);
+        query2.whereEqualTo(Message.MESSAGE_RECEIVER_POINTER_KEY, currentUser);
 
         allQueries = new ArrayList<>();
         allQueries.add(query1);
@@ -173,7 +198,7 @@ public class MessageActivity extends AppCompatActivity {
                     Log.i(TAG, messages.toString());
                     mMessages.addAll(messages);
                     mAdapter.notifyDataSetChanged();
-                    rvMessage.scrollToPosition(0);
+                    rvMessage.smoothScrollToPosition(0);
                 }
             }
         });

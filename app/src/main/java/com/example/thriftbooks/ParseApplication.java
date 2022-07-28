@@ -11,9 +11,12 @@ import com.example.thriftbooks.models.Message;
 import com.example.thriftbooks.models.MessageThread;
 import com.example.thriftbooks.models.Post;
 import com.example.thriftbooks.models.User;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.facebook.ParseFacebookUtils;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -39,6 +42,9 @@ public class ParseApplication extends Application {
                 .server("https://parseapi.back4app.com").enableLocalDataStore()
                 .build()
         );
+        ParseFacebookUtils.initialize(ParseApplication.this);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
         installation.put("GCMSenderId",
                 "994839956430");

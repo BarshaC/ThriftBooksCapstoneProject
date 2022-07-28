@@ -48,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(SignUpActivity.this, LoginActivity.class);
+                showAlert("Successful Sign Up!", "Login here" + "!");
                 startActivity(i);
                 finish();
             }
@@ -91,7 +92,6 @@ public class SignUpActivity extends AppCompatActivity {
                     ParseUser.logOut();
                     Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
-                showAlert("Successful Sign Up!", "Welcome " + firstName + "!");
             }
         });
         etUsername.setText(null);
@@ -100,7 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
         etPassword.setText(null);
         etEmail.setText(null);
         etDateOfBirth.setText(null);
-        spinnerFavGenre.setAdapter(null);
+        spinnerFavGenre.setAdapter(spinnerFavGenre.getAdapter());
     }
 
     private void showAlert(String title, String message) {

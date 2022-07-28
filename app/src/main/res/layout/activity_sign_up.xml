@@ -51,6 +51,9 @@
         android:layout_marginEnd="32dp"
         android:hint="@string/signUpFN"
         android:textSize="14sp"
+        android:inputType="text"
+        android:nextFocusLeft="@id/etDateOfBirth"
+        android:imeOptions="actionNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userFirstName2" />
 
@@ -73,6 +76,9 @@
         android:layout_marginTop="5dp"
         android:hint="@string/SignUpName"
         android:textSize="14sp"
+        android:nextFocusRight="@id/etSecondName"
+        android:imeOptions="actionNext"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userFirstName" />
 
@@ -86,7 +92,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@android:color/white"></androidx.appcompat.widget.Toolbar>
+        app:titleTextColor="@android:color/white" />
 
     <EditText
         android:id="@+id/etRegisterUsername"
@@ -97,6 +103,9 @@
         android:layout_marginEnd="32dp"
         android:hint="@string/hintUsername"
         android:textSize="14sp"
+        android:nextFocusDown="@id/etRegisterPassword"
+        android:imeOptions="actionNext"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -169,6 +178,8 @@
         android:ems="10"
         android:minHeight="48dp"
         android:spinnerMode="dropdown"
+        android:nextFocusDown="@id/etRegisterUsername"
+        android:imeOptions="actionNext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ageFeedback" />
 
@@ -204,6 +215,8 @@
         android:hint="@string/DOBHint"
         android:inputType="date"
         android:textSize="16sp"
+        android:nextFocusDown="@id/spinnerFavGenre"
+        android:imeOptions="actionNext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPickDate" />
 
@@ -251,7 +264,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="Login"
+        android:text="@string/login"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="8dp"
         tools:ignore="MissingConstraints" />

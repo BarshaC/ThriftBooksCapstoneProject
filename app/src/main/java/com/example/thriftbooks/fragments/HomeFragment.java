@@ -1,16 +1,16 @@
 package com.example.thriftbooks.fragments;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,23 +22,29 @@ import com.example.thriftbooks.R;
 import com.example.thriftbooks.activities.MainActivity;
 import com.example.thriftbooks.activities.MessageThreadActivity;
 import com.example.thriftbooks.models.Post;
+import com.example.thriftbooks.models.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class HomeFragment extends Fragment {
     private static final String TAG = "PostsFragment";
-    protected PostsAdapter adapter;
-    protected List<Post> allPosts;
+    private PostsAdapter adapter;
+    private List<Post> allPosts;
     EndlessRecyclerViewScrollListener scrollListener;
     private RecyclerView rvBooks;
     private SwipeRefreshLayout swipeContainer;
     MainActivity activity;
     ImageButton btnSendMessage;
+    User currentUser = (User) ParseUser.getCurrentUser();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -76,11 +82,13 @@ public class HomeFragment extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                allPosts.clear();
+
                 queryPosts(0);
             }
         });
         rvBooks = view.findViewById(R.id.rvBooks);
-        allPosts = new ArrayList<Post>();
+        allPosts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), allPosts);
         rvBooks.setAdapter(adapter);
         rvBooks.setLayoutManager(linearLayoutManager);
@@ -103,22 +111,71 @@ public class HomeFragment extends Fragment {
         query.setSkip(i);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Post>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void done(List<Post> posts, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts on HomePage", e);
-                    Toast.makeText(getContext(), "Issue with getting posts!", Toast.LENGTH_LONG).show();
-                    return;
+                Double favGenreScore = 0.0;
+                Double priceScore = 0.0;
+                Double latestUpload = 0.0;
+                Double maxPrice = 0.0;
+                Double minimum = 0.0;
+                if (posts.size() > 1){
+                    minimum = posts.get(0).getBookPrice();
+                }else{
+                    minimum = 0.0;
                 }
+                Double minPrice  = minimum;
+                Map<Post, Double> map = new HashMap<>();
                 for (Post post : posts) {
-                    Log.i(TAG, "Posts : Final: " + post.getBookCondition());
+                    Double currentPrice = post.getBookPrice();
+                    if (currentPrice > maxPrice) {
+                        maxPrice = post.getBookPrice();
+
+                    } else if (currentPrice < minPrice) {
+                        minPrice = currentPrice;
+                    }
+                }
+
+                for (Post post : posts) {
+                    favGenreScore = getScaledValue(scoreFavGenre(post.getBookGenre()),1.0,0.0);
+                    latestUpload = getScaledValue(timeScore(post.getCreatedAt()), timeScore(posts.get(0).getCreatedAt()), timeScore(posts.get(posts.size() - 1).getCreatedAt()));
+                    priceScore = getScaledValue(post.getBookPrice(),maxPrice,minPrice);
+                    final Double finalScore = 0.80 * favGenreScore + 0.1 * priceScore + 0.1 * latestUpload;
+                    map.put(post, finalScore);
 
                 }
-                allPosts.clear();
-                allPosts.addAll(posts);
+                map.entrySet().stream().sorted(Map.Entry.comparingByValue());
+                List<Post> result = map.keySet().stream().collect(Collectors.toList());
+                allPosts.addAll(result);
                 swipeContainer.setRefreshing(false);
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+    private Double timeScore(Date createdAt) {
+        double time = createdAt.getTime();
+        return time;
+
+    }
+
+    private Double scoreFavGenre(String bookGenre) {
+        String userFavGenre = currentUser.getFavGenre();
+        Double score = 0.0;
+        if (userFavGenre == bookGenre) {
+            score = 1.0;
+        } else if (userFavGenre == bookGenre) {
+            score = 0.0;
+        }
+        return score;
+    }
+
+    private Double getScaledValue(Double data, Double maxValue, Double minValue) {
+        Double dataPoint;
+        if (data > minValue) {
+            dataPoint = ((data - minValue) / (maxValue - minValue));
+        } else {
+            dataPoint = ((minValue - data) / (maxValue - minValue));
+        }
+        return dataPoint;
     }
 }

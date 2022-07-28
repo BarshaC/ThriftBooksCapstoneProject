@@ -30,5 +30,4 @@
             android:textSize="18sp"
             android:textColor="@color/white" />
     </Toolbar>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

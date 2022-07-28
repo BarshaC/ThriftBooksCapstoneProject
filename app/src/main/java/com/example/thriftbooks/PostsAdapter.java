@@ -109,7 +109,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         public void bind(Post post) {
             Date timeStamp = post.getCreatedAt();
             String time = Post.calculateTimeAgo(timeStamp);
-            timeAgo.setText(time + " ago");
+            timeAgo.setText(time);
             tvUsername.setText(post.getUser().getUsername());
             tvBookTitle.setText("Title: " + post.getBookTitle());
             tvBookAuthor.setText("Author: " + post.getBookAuthor());

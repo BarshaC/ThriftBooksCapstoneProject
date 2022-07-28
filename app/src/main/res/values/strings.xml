@@ -47,4 +47,9 @@
     <string name="genre">Genre</string>
     <string name="price"> Price($) </string>
     <string name="pageCount">Number of Pages</string>
+    <string name="facebook_app_id">2299279660241376</string>
+    <string name="facebook_client_token">2a80657bdce83171ddc6bb6f9d08d798</string>
+    <string name="fb_login_protocol_scheme">fb2299279660241376</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
 </resources>
